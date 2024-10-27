@@ -3,16 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
+    <title>My Website</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="todo-container">
-        <h1>To-Do List</h1>
-        <input type="text" id="todo-input" placeholder="Add a new task">
-        <button id="add-button">Add</button>
-        <ul id="todo-list"></ul>
-    </div>
-    <script src="app.js"></script>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">My Website</h1>
+            <nav class="navbar">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section id="home">
+            <h2>Welcome to My Website</h2>
+            <p>This is the home section where you can introduce your website.</p>
+        </section>
+        <section id="about">
+            <h2>About Us</h2>
+            <p>Information about your website or company can go here.</p>
+        </section>
+        <section id="services">
+            <h2>Our Services</h2>
+            <p>Describe the services you offer here.</p>
+        </section>
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>Provide contact information here.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 My Website. All rights reserved.</p>
+        </div>
+    </footer>
+
 </body>
 </html>

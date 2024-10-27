@@ -1,46 +1,21 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const input = document.getElementById("todo-input");
-    const addButton = document.getElementById("add-button");
-    const todoList = document.getElementById("todo-list");
+    // 모든 네비게이션 링크 요소를 선택
+    const navLinks = document.querySelectorAll(".navbar a");
 
-    // 할 일 추가 기능
-    addButton.addEventListener("click", function() {
-        console.log("Add button clicked");  // Add 버튼 클릭 시 콘솔에 메시지 출력
-        const taskText = input.value.trim();
-        if (taskText !== "") {
-            addTask(taskText);
-            input.value = "";
-        }
-    });
-    
+    navLinks.forEach(link => {
+        link.addEventListener("click", function(event) {
+            // 기본 링크 클릭 동작을 막음
+            event.preventDefault();
 
-    // Enter 키로 할 일 추가
-    input.addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            addButton.click();
-        }
-    });
+            // 링크의 href 속성에서 이동할 섹션 ID 추출
+            const targetId = this.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
 
-    // 할 일 항목 추가 함수
-    function addTask(taskText) {
-        const listItem = document.createElement("li");
-        listItem.classList.add("todo-item");
-
-        const taskSpan = document.createElement("span");
-        taskSpan.textContent = taskText;
-        taskSpan.addEventListener("click", function() {
-            listItem.classList.toggle("completed");
+            // 부드러운 스크롤
+            window.scrollTo({
+                top: targetSection.offsetTop,
+                behavior: "smooth"
+            });
         });
-
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.classList.add("delete-button");
-        deleteButton.addEventListener("click", function() {
-            todoList.removeChild(listItem);
-        });
-
-        listItem.appendChild(taskSpan);
-        listItem.appendChild(deleteButton);
-        todoList.appendChild(listItem);
-    }
+    });
 });
