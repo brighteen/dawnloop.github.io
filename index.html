@@ -1,30 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dawnloop</title>
+    <title>To-Do List</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>dawnloop</h1>
-        <p>명구의 토이프로젝트(수정중5)</p>
-    </header>
-    <main>
-        <section class="cards">
-            <div class="card">
-                <h2>첫 주제를 뭘로 할지 To to?</h2>
-                <p>이곳에 카드 내용을 작성해보세요.</p>
-                <button class="card-button">자세히 보기</button>
-            </div>
-            <div class="card">
-                <h2>카드 제목 2</h2>
-                <p>이곳에 카드 내용을 작성해보세요.</p>
-                <button class="card-button">자세히 보기</button>
-            </div>
-        </section>
-    </main>
+    <div class="todo-container">
+        <h1>To-Do List</h1>
+        <input type="text" id="todo-input" placeholder="Add a new task">
+        <button id="add-button">Add</button>
+        <ul id="todo-list"></ul>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
