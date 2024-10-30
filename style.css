@@ -1,4 +1,4 @@
-/* Reset */
+/* Reset 기본 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -25,15 +25,13 @@ header h1 {
     margin-bottom: 0.5em;
 }
 
-header nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 1em;
-    font-weight: bold;
-}
-
-header nav a:hover {
-    color: #bbb;
+#search-bar {
+    padding: 0.5em;
+    margin: 1em 0;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 /* Section 기본 스타일 */
@@ -70,12 +68,4 @@ footer {
     text-align: center;
     padding: 1em;
     background-color: #333;
-}
-
-footer input[type="text"] {
-    padding: 0.5em;
-    width: 80%;
-    max-width: 300px;
-    border-radius: 4px;
-    border: none;
 }

@@ -2,72 +2,51 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나의 블로그</title>
-    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <h1>나의 블로그</h1>
-        <nav>
-            <a href="#resume">Resume</a>
-            <a href="#study">공부한 흔적</a>
-            <a href="#daily">일상</a>
-            <a href="#english">영어 공부</a>
-            <a href="#memo">메모장</a>
-            <a href="#guestbook">방명록</a>
-        </nav>
+        <input type="text" id="search-bar" placeholder="검색어를 입력하세요..." oninput="searchPosts()">
+        <!-- 네비게이션 메뉴 생략 -->
     </header>
 
-    <!-- Resume Section -->
     <section id="resume">
         <h2>Resume</h2>
-        <p>간단한 나의 소개, 일하는 방향 및 성격, 공부하는 주제</p>
-        <button>수정</button>
+        <p>간단한 나의 소개와 경력</p>
+        <button onclick="location.href='resume_edit.html'">수정</button>
     </section>
 
-    <!-- Study Section -->
     <section id="study">
         <h2>공부한 흔적</h2>
-        <p>내가 공부한 내용을 글로 정리하는 공간입니다.</p>
-        <button>글 작성</button>
+        <p>공부 기록을 작성할 수 있는 공간</p>
+        <button onclick="location.href='new_study_post.html'">글 작성</button>
     </section>
 
-    <!-- Daily Section -->
     <section id="daily">
         <h2>일상</h2>
-        <p>요리, 운동, 여행 등의 사생활을 기록하는 공간입니다.</p>
-        <button>글 작성</button>
+        <p>요리, 운동, 여행 등의 기록</p>
+        <button onclick="location.href='new_daily_post.html'">글 작성</button>
     </section>
 
-    <!-- English Section -->
     <section id="english">
         <h2>영어 공부</h2>
-        <p>영어 공부 내용을 기록하는 공간입니다.</p>
-        <button>글 작성</button>
+        <p>영어 학습 내용을 기록하는 공간</p>
+        <button onclick="location.href='new_english_post.html'">글 작성</button>
     </section>
 
-    <!-- Memo Section -->
     <section id="memo">
         <h2>메모장</h2>
-        <p>그날그날 생각이나 아이디어를 기록하는 공간입니다.</p>
-        <button>메모 추가</button>
+        <p>아이디어나 생각을 간단히 기록할 수 있는 공간</p>
+        <button onclick="location.href='new_memo.html'">메모 추가</button>
     </section>
 
-    <!-- Guestbook Section -->
     <section id="guestbook">
         <h2>방명록</h2>
-        <p>방문자가 간단한 인사말을 남길 수 있는 공간입니다.</p>
-        <button>글 작성</button>
+        <p>방문자가 남긴 인사말을 확인할 수 있는 공간</p>
+        <button onclick="location.href='guestbook.html'">글 작성</button>
     </section>
-
-    <!-- Search Bar -->
-    <footer>
-        <input type="text" placeholder="검색어 입력...">
-    </footer>
-    
-    <script src="app.js"></script>
 
 </body>
 </html>
