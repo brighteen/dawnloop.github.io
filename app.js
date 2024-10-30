@@ -1,9 +1,16 @@
 function searchAllPosts() {
     const query = document.getElementById("search-bar").value.toLowerCase();
-    const resultsContainer = document.getElementById("search-results");
-    resultsContainer.innerHTML = ""; // 검색 결과 초기화
 
-    // 각 카테고리에서 데이터 불러오기
+    if (!query.trim()) {
+        alert("검색어를 입력해 주세요.");
+        return;
+    }
+
+    // 새 창 생성
+    const resultWindow = window.open("", "_blank", "width=600,height=400");
+    resultWindow.document.write("<h1>검색 결과</h1>");
+    resultWindow.document.write("<ul id='search-results'></ul>");
+
     const categories = ["resumes", "studies", "dailies", "englishEntries", "memos"];
     const categoryNames = {
         resumes: "Resume",
@@ -18,15 +25,17 @@ function searchAllPosts() {
 
         posts.forEach((post, index) => {
             if (post.toLowerCase().includes(query)) {
-                const resultItem = document.createElement("div");
-                resultItem.innerHTML = `<strong>${categoryNames[category]}</strong> #${index + 1}: ${post}`;
-                resultsContainer.appendChild(resultItem);
+                resultWindow.document.getElementById("search-results").innerHTML += `
+                    <li><strong>${categoryNames[category]}</strong> #${index + 1}: ${post}</li>`;
             }
         });
     });
+
+    if (!resultWindow.document.getElementById("search-results").innerHTML) {
+        resultWindow.document.write("<p>검색 결과가 없습니다.</p>");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    // 검색 입력 이벤트 연결
-    document.getElementById("search-bar").addEventListener("input", searchAllPosts);
+    document.getElementById("search-button").addEventListener("click", searchAllPosts);
 });
