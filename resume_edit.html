@@ -3,9 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Resume 수정</title>
+    <script src="resume_script.js"></script>
 </head>
 <body>
     <h1>Resume 수정 페이지</h1>
-    <p>여기서 나의 정보를 수정할 수 있습니다.</p>
+    <p>이곳에서 간단한 자기소개와 정보를 입력하세요.</p>
+
+    <form id="resume-form">
+        <textarea id="resume-content" rows="10" placeholder="여기에 내용을 작성하세요"></textarea><br>
+        <button type="button" onclick="saveResume()">저장</button>
+    </form>
+
+    <h2>저장된 내용</h2>
+    <div id="saved-resume"></div>
 </body>
 </html>
