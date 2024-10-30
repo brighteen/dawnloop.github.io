@@ -14,9 +14,29 @@ function displayEnglish() {
 
     englishEntries.forEach((entry, index) => {
         const listItem = document.createElement("li");
-        listItem.textContent = `#${index + 1} - ${entry}`;
+        const textSpan = document.createElement("span");
+        textSpan.textContent = `#${index + 1} - ${entry}`;
+
+        const editButton = document.createElement("button");
+        editButton.textContent = "수정";
+        editButton.onclick = function() {
+            editEnglish(index);
+        };
+
+        listItem.appendChild(textSpan);
+        listItem.appendChild(editButton);
         list.appendChild(listItem);
     });
+}
+
+function editEnglish(index) {
+    const englishEntries = JSON.parse(localStorage.getItem("englishEntries"));
+    const newContent = prompt("수정할 내용을 입력하세요:", englishEntries[index]);
+    if (newContent !== null) {
+        englishEntries[index] = newContent;
+        localStorage.setItem("englishEntries", JSON.stringify(englishEntries));
+        displayEnglish();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", displayEnglish);
