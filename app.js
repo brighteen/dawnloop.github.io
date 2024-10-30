@@ -1,14 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // 검색 기능 구현
-    function searchPosts() {
-        const query = document.getElementById("search-bar").value.toLowerCase();
-        const sections = document.querySelectorAll("section");
+// 검색 기능
+function searchPosts() {
+    const query = document.getElementById("search-bar").value.toLowerCase();
+    const sections = document.querySelectorAll("section");
 
-        sections.forEach(section => {
-            const content = section.innerText.toLowerCase();
-            section.style.display = content.includes(query) ? "block" : "none";
-        });
-    }
+    sections.forEach(section => {
+        const content = section.innerText.toLowerCase();
+        if (content.includes(query)) {
+            section.style.display = "block";
+        } else {
+            section.style.display = "none";
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 검색 함수 연결
+    window.searchPosts = searchPosts;
 
     // 페이지 이동 버튼
     const resumeButton = document.querySelector("#resume button");
@@ -42,5 +49,3 @@ document.addEventListener("DOMContentLoaded", function() {
         location.href = "guestbook.html";
     });
 });
-
-window.searchPosts = searchPosts;
