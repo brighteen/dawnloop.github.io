@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const buttons = document.querySelectorAll("section button");
     buttons.forEach(button => {
         button.addEventListener("click", function() {
+            console.log("Button clicked!"); // 버튼이 클릭될 때마다 콘솔에 출력
             alert(`${this.parentElement.querySelector("h2").textContent} 글 작성 또는 수정 기능이 곧 추가될 예정입니다.`);
         });
     });
