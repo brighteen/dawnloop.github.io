@@ -1,11 +1,35 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Resume, 공부한 흔적, 일상, 영어 공부, 메모장 등에서 '글 작성' 버튼을 클릭 시 작성 양식이 나타나도록 설정
-    const buttons = document.querySelectorAll("section button");
-    buttons.forEach(button => {
-        button.addEventListener("click", function() {
-            console.log("Button clicked!"); // 버튼이 클릭될 때마다 콘솔에 출력
-            alert(`${this.parentElement.querySelector("h2").textContent} 글 작성 또는 수정 기능이 곧 추가될 예정입니다.`);
-        });
+    // 각 버튼 요소를 선택
+    const resumeButton = document.querySelector("#resume button");
+    const studyButton = document.querySelector("#study button");
+    const dailyButton = document.querySelector("#daily button");
+    const englishButton = document.querySelector("#english button");
+    const memoButton = document.querySelector("#memo button");
+    const guestbookButton = document.querySelector("#guestbook button");
+
+    // 각 버튼 클릭 시 이동할 페이지 설정
+    resumeButton.addEventListener("click", function() {
+        location.href = "resume_edit.html"; // Resume 수정 페이지
+    });
+
+    studyButton.addEventListener("click", function() {
+        location.href = "new_study_post.html"; // 공부한 흔적 새 글 작성 페이지
+    });
+
+    dailyButton.addEventListener("click", function() {
+        location.href = "new_daily_post.html"; // 일상 새 글 작성 페이지
+    });
+
+    englishButton.addEventListener("click", function() {
+        location.href = "new_english_post.html"; // 영어 공부 새 글 작성 페이지
+    });
+
+    memoButton.addEventListener("click", function() {
+        location.href = "new_memo.html"; // 메모 추가 페이지
+    });
+
+    guestbookButton.addEventListener("click", function() {
+        location.href = "guestbook.html"; // 방명록 페이지
     });
 
     // 검색 기능 구현
