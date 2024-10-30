@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>일상 작성</title>
+    <script src="daily_script.js"></script>
 </head>
 <body>
-    <h1>새로운 일상 작성</h1>
-    <p>여기서 새로운 일상을 기록하세요.</p>
+    <h1>일상 작성</h1>
+    <textarea id="daily-content" rows="5" placeholder="일상 내용을 작성하세요"></textarea><br>
+    <button type="button" onclick="saveDaily()">저장</button>
+
+    <h2>저장된 일상</h2>
+    <ul id="saved-daily"></ul>
 </body>
 </html>

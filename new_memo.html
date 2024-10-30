@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>메모장</title>
+    <script src="memo_script.js"></script>
 </head>
 <body>
     <h1>메모장</h1>
-    <p>간단한 생각이나 아이디어를 작성할 수 있습니다.</p>
+    <textarea id="memo-content" rows="5" placeholder="메모를 작성하세요"></textarea><br>
+    <button type="button" onclick="saveMemo()">저장</button>
+
+    <h2>저장된 메모</h2>
+    <ul id="saved-memo"></ul>
 </body>
 </html>
