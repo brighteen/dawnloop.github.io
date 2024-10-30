@@ -1,51 +1,32 @@
-// 검색 기능
-function searchPosts() {
+function searchAllPosts() {
     const query = document.getElementById("search-bar").value.toLowerCase();
-    const sections = document.querySelectorAll("section");
+    const resultsContainer = document.getElementById("search-results");
+    resultsContainer.innerHTML = ""; // 검색 결과 초기화
 
-    sections.forEach(section => {
-        const content = section.innerText.toLowerCase();
-        if (content.includes(query)) {
-            section.style.display = "block";
-        } else {
-            section.style.display = "none";
-        }
+    // 각 카테고리에서 데이터 불러오기
+    const categories = ["resumes", "studies", "dailies", "englishEntries", "memos"];
+    const categoryNames = {
+        resumes: "Resume",
+        studies: "공부한 흔적",
+        dailies: "일상",
+        englishEntries: "영어 공부",
+        memos: "메모장"
+    };
+
+    categories.forEach(category => {
+        const posts = JSON.parse(localStorage.getItem(category)) || [];
+
+        posts.forEach((post, index) => {
+            if (post.toLowerCase().includes(query)) {
+                const resultItem = document.createElement("div");
+                resultItem.innerHTML = `<strong>${categoryNames[category]}</strong> #${index + 1}: ${post}`;
+                resultsContainer.appendChild(resultItem);
+            }
+        });
     });
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-    // 검색 함수 연결
-    window.searchPosts = searchPosts;
-
-    // 페이지 이동 버튼
-    const resumeButton = document.querySelector("#resume button");
-    const studyButton = document.querySelector("#study button");
-    const dailyButton = document.querySelector("#daily button");
-    const englishButton = document.querySelector("#english button");
-    const memoButton = document.querySelector("#memo button");
-    const guestbookButton = document.querySelector("#guestbook button");
-
-    resumeButton.addEventListener("click", function() {
-        location.href = "resume_edit.html";
-    });
-
-    studyButton.addEventListener("click", function() {
-        location.href = "new_study_post.html";
-    });
-
-    dailyButton.addEventListener("click", function() {
-        location.href = "new_daily_post.html";
-    });
-
-    englishButton.addEventListener("click", function() {
-        location.href = "new_english_post.html";
-    });
-
-    memoButton.addEventListener("click", function() {
-        location.href = "new_memo.html";
-    });
-
-    guestbookButton.addEventListener("click", function() {
-        location.href = "guestbook.html";
-    });
+    // 검색 입력 이벤트 연결
+    document.getElementById("search-bar").addEventListener("input", searchAllPosts);
 });

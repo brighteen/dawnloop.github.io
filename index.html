@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>나의 블로그</title>
+    <link rel="stylesheet" href="style.css">
     <script src="app.js"></script>
 </head>
 <body>
     <header>
         <h1>나의 블로그</h1>
-        <input type="text" id="search-bar" placeholder="검색어를 입력하세요..." oninput="searchPosts()">
-        <!-- 네비게이션 메뉴 생략 -->
+        <input type="text" id="search-bar" placeholder="검색어를 입력하세요..." oninput="searchAllPosts()">
     </header>
+
+    <section id="search-results"></section> <!-- 검색 결과 표시 -->
 
     <section id="resume">
         <h2>Resume</h2>
@@ -47,6 +49,5 @@
         <p>방문자가 남긴 인사말을 확인할 수 있는 공간</p>
         <button onclick="location.href='guestbook.html'">글 작성</button>
     </section>
-
 </body>
 </html>
