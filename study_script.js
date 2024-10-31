@@ -1,16 +1,19 @@
-// 공부한 흔적 UI와 기능 추가
-const studySection = document.getElementById("main-content");
+// 공부한 흔적 페이지에 글 작성, 저장, 조회, 수정, 삭제 기능을 추가합니다.
 
-studySection.innerHTML = `
-    <h2>공부한 흔적</h2>
-    <input type="text" id="study-title" placeholder="제목"><br>
-    <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
-    <button id="save-study-btn">저장</button>
-    <ul id="saved-study"></ul>
-`;
+function showPostForm() {
+    const studySection = document.getElementById("main-content");
+    studySection.innerHTML += `
+        <div id="post-form">
+            <input type="text" id="study-title" placeholder="제목"><br>
+            <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
+            <button id="save-study-post">글 저장</button>
+        </div>
+    `;
+    document.getElementById("save-study-post").addEventListener("click", saveStudyPost);
+}
 
 // 글 저장 기능
-document.getElementById("save-study-btn").addEventListener("click", function() {
+function saveStudyPost() {
     const title = document.getElementById("study-title").value;
     const content = document.getElementById("study-content").value;
 
@@ -22,45 +25,62 @@ document.getElementById("save-study-btn").addEventListener("click", function() {
     const posts = JSON.parse(localStorage.getItem("study")) || [];
     posts.push({ title, content });
     localStorage.setItem("study", JSON.stringify(posts));
-    displayStudy();
+    displayStudyPosts();
 
-    document.getElementById("study-title").value = "";
-    document.getElementById("study-content").value = "";
-});
+    // 입력 필드 초기화
+    document.getElementById("post-form").remove();
+}
 
-// 저장된 글 표시 기능
-function displayStudy() {
+// 저장된 글 목록 표시
+function displayStudyPosts() {
     const posts = JSON.parse(localStorage.getItem("study")) || [];
     const list = document.getElementById("saved-study");
     list.innerHTML = posts.map((post, index) => `
-        <li>
-            <strong>${post.title}</strong>: ${post.content} 
-            <button onclick="editStudy(${index})">수정</button> 
-            <button onclick="deleteStudy(${index})">삭제</button>
+        <li onclick="viewStudyPost(${index})">
+            <strong>${post.title}</strong>
         </li>
     `).join("");
 }
 
-// 글 수정 기능
-function editStudy(index) {
+// 글 보기, 수정 및 삭제 기능
+function viewStudyPost(index) {
     const posts = JSON.parse(localStorage.getItem("study"));
-    const newTitle = prompt("수정할 제목을 입력하세요:", posts[index].title);
-    const newContent = prompt("수정할 내용을 입력하세요:", posts[index].content);
-    if (newTitle !== null && newContent !== null) {
-        posts[index].title = newTitle;
-        posts[index].content = newContent;
-        localStorage.setItem("study", JSON.stringify(posts));
-        displayStudy();
-    }
+    const post = posts[index];
+    document.getElementById("main-content").innerHTML = `
+        <h2>${post.title}</h2>
+        <p>${post.content}</p>
+        <button onclick="editStudyPost(${index})">수정</button>
+        <button onclick="deleteStudyPost(${index})">삭제</button>
+        <button onclick="loadContent('study')">목록으로 돌아가기</button>
+    `;
 }
 
-// 글 삭제 기능
-function deleteStudy(index) {
+function editStudyPost(index) {
+    const posts = JSON.parse(localStorage.getItem("study"));
+    const post = posts[index];
+    document.getElementById("main-content").innerHTML = `
+        <h2>글 수정</h2>
+        <input type="text" id="study-title" value="${post.title}"><br>
+        <textarea id="study-content">${post.content}</textarea><br>
+        <button onclick="saveEditedStudyPost(${index})">저장</button>
+        <button onclick="loadContent('study')">취소</button>
+    `;
+}
+
+function saveEditedStudyPost(index) {
+    const posts = JSON.parse(localStorage.getItem("study"));
+    posts[index].title = document.getElementById("study-title").value;
+    posts[index].content = document.getElementById("study-content").value;
+    localStorage.setItem("study", JSON.stringify(posts));
+    loadContent('study');
+}
+
+function deleteStudyPost(index) {
     const posts = JSON.parse(localStorage.getItem("study"));
     posts.splice(index, 1);
     localStorage.setItem("study", JSON.stringify(posts));
-    displayStudy();
+    loadContent('study');
 }
 
 // 페이지 로드 시 저장된 글 표시
-displayStudy();
+displayStudyPosts();

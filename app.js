@@ -15,10 +15,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 setupResumeEvents();
                 break;
             case 'study':
-                mainContent.innerHTML = `<h2>공부한 흔적</h2>`;
-                const script = document.createElement("script");
-                script.src = "study_script.js";
-                mainContent.appendChild(script);
+                mainContent.innerHTML = `
+                    <h2>공부한 흔적</h2>
+                    <button id="new-post-button">글 작성</button>
+                    <ul id="saved-study"></ul>
+                `;
+                document.getElementById("new-post-button").addEventListener("click", showPostForm);
+                displayStudyPosts();
                 break;
             default:
                 mainContent.innerHTML = `<p>존재하지 않는 카테고리입니다.</p>`;
