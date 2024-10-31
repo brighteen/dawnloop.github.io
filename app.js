@@ -6,10 +6,23 @@ function searchAllPosts() {
         return;
     }
 
+    // 새로운 창 열기 및 기본 HTML 구성
     const resultWindow = window.open("", "_blank", "width=600,height=400");
-    resultWindow.document.write("<h1>검색 결과</h1>");
-    resultWindow.document.write("<ul id='search-results'></ul>");
+    resultWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <title>검색 결과</title>
+        </head>
+        <body>
+            <h1>검색 결과</h1>
+            <ul id="search-results"></ul>
+        </body>
+        </html>
+    `);
 
+    const resultDoc = resultWindow.document;
     const categories = ["resumes", "studies", "dailies", "englishEntries", "memos"];
     const categoryNames = {
         resumes: "Resume",
@@ -19,19 +32,21 @@ function searchAllPosts() {
         memos: "메모장"
     };
 
+    let hasResults = false;
     categories.forEach(category => {
         const posts = JSON.parse(localStorage.getItem(category)) || [];
-
         posts.forEach((post, index) => {
             if (post.toLowerCase().includes(query)) {
-                resultWindow.document.getElementById("search-results").innerHTML += `
-                    <li><strong>${categoryNames[category]}</strong> #${index + 1}: ${post}</li>`;
+                hasResults = true;
+                const resultItem = resultDoc.createElement("li");
+                resultItem.innerHTML = `<strong>${categoryNames[category]}</strong> #${index + 1}: ${post}`;
+                resultDoc.getElementById("search-results").appendChild(resultItem);
             }
         });
     });
 
-    if (!resultWindow.document.getElementById("search-results").innerHTML) {
-        resultWindow.document.write("<p>검색 결과가 없습니다.</p>");
+    if (!hasResults) {
+        resultDoc.getElementById("search-results").innerHTML = "<p>검색 결과가 없습니다.</p>";
     }
 }
 
