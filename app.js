@@ -6,7 +6,6 @@ function searchAllPosts() {
         return;
     }
 
-    // 새 창 생성
     const resultWindow = window.open("", "_blank", "width=600,height=400");
     resultWindow.document.write("<h1>검색 결과</h1>");
     resultWindow.document.write("<ul id='search-results'></ul>");
@@ -37,5 +36,11 @@ function searchAllPosts() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+    const searchBar = document.getElementById("search-bar");
+    searchBar.addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            searchAllPosts();
+        }
+    });
     document.getElementById("search-button").addEventListener("click", searchAllPosts);
 });
