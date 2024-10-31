@@ -119,4 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     window.loadContent = loadContent;
+
+    // 초기 로드 시 Resume 화면을 기본으로 표시
+    loadContent('resume');
 });
