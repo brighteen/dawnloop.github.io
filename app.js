@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const editButton = document.getElementById("edit-resume");
     const saveButton = document.getElementById("save-resume");
 
-    // 카테고리별 내용 로드 함수
     function loadContent(category) {
         switch (category) {
             case 'resume':
@@ -65,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function loadResume() {
         const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
-        resumeDisplay.innerHTML = savedContent.replace(/\n/g, "<br>");  // 줄바꿈 반영
+        resumeDisplay.innerHTML = savedContent.replace(/\n/g, "<br>");
         resumeContent.value = savedContent;
     }
 
@@ -79,13 +78,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function saveResume() {
         const content = resumeContent.value;
         localStorage.setItem("resumeContent", content);
-        resumeDisplay.innerHTML = content.replace(/\n/g, "<br>"); // 줄바꿈 반영
-
+        resumeDisplay.innerHTML = content.replace(/\n/g, "<br>");
         resumeDisplay.style.display = "block";
         resumeContent.style.display = "none";
         editButton.style.display = "inline";
         saveButton.style.display = "none";
-
         alert("Resume이 저장되었습니다.");
     }
 
@@ -106,9 +103,35 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayStudy() {
         const studies = JSON.parse(localStorage.getItem("studies")) || [];
         const list = document.getElementById("saved-study");
-        list.innerHTML = studies.map(study => `<li><strong>${study.title}</strong>: ${study.content}</li>`).join("");
+        list.innerHTML = studies.map((study, index) => `
+            <li>
+                <strong>${study.title}</strong>: ${study.content} 
+                <button onclick="editPost('studies', ${index})">수정</button> 
+                <button onclick="deletePost('studies', ${index})">삭제</button>
+            </li>
+        `).join("");
     }
 
+    function editPost(category, index) {
+        const posts = JSON.parse(localStorage.getItem(category));
+        const newTitle = prompt("수정할 제목을 입력하세요:", posts[index].title);
+        const newContent = prompt("수정할 내용을 입력하세요:", posts[index].content);
+        if (newTitle !== null && newContent !== null) {
+            posts[index].title = newTitle;
+            posts[index].content = newContent;
+            localStorage.setItem(category, JSON.stringify(posts));
+            loadContent(category);
+        }
+    }
+
+    function deletePost(category, index) {
+        const posts = JSON.parse(localStorage.getItem(category));
+        posts.splice(index, 1);
+        localStorage.setItem(category, JSON.stringify(posts));
+        loadContent(category);
+    }
+
+    // Daily, English, Memo 저장 및 표시 함수
     function saveDaily() {
         const title = document.getElementById("daily-title").value;
         const content = document.getElementById("daily-content").value;
@@ -121,7 +144,13 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayDaily() {
         const dailies = JSON.parse(localStorage.getItem("dailies")) || [];
         const list = document.getElementById("saved-daily");
-        list.innerHTML = dailies.map(daily => `<li><strong>${daily.title}</strong>: ${daily.content}</li>`).join("");
+        list.innerHTML = dailies.map((daily, index) => `
+            <li>
+                <strong>${daily.title}</strong>: ${daily.content} 
+                <button onclick="editPost('dailies', ${index})">수정</button> 
+                <button onclick="deletePost('dailies', ${index})">삭제</button>
+            </li>
+        `).join("");
     }
 
     function saveEnglish() {
@@ -136,7 +165,13 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayEnglish() {
         const englishEntries = JSON.parse(localStorage.getItem("englishEntries")) || [];
         const list = document.getElementById("saved-english");
-        list.innerHTML = englishEntries.map(entry => `<li><strong>${entry.title}</strong>: ${entry.content}</li>`).join("");
+        list.innerHTML = englishEntries.map((entry, index) => `
+            <li>
+                <strong>${entry.title}</strong>: ${entry.content} 
+                <button onclick="editPost('englishEntries', ${index})">수정</button> 
+                <button onclick="deletePost('englishEntries', ${index})">삭제</button>
+            </li>
+        `).join("");
     }
 
     function saveMemo() {
@@ -151,7 +186,13 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayMemo() {
         const memos = JSON.parse(localStorage.getItem("memos")) || [];
         const list = document.getElementById("saved-memo");
-        list.innerHTML = memos.map(memo => `<li><strong>${memo.title}</strong>: ${memo.content}</li>`).join("");
+        list.innerHTML = memos.map((memo, index) => `
+            <li>
+                <strong>${memo.title}</strong>: ${memo.content} 
+                <button onclick="editPost('memos', ${index})">수정</button> 
+                <button onclick="deletePost('memos', ${index})">삭제</button>
+            </li>
+        `).join("");
     }
 
     loadResume();
