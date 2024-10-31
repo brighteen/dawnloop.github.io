@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const mainContent = document.getElementById("main-content");
 
     function loadContent(category) {
-        console.log(`Loading content for category: ${category}`); // 로그 추가
         switch (category) {
             case 'resume':
                 mainContent.innerHTML = `
@@ -21,10 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button id="new-post-button">글 작성</button>
                     <ul id="saved-study"></ul>
                 `;
-                console.log("Attempting to load study_script.js"); // 로그 추가
-                const script = document.createElement("script");
-                script.src = "study_script.js";
-                document.body.appendChild(script);
+                document.getElementById("new-post-button").addEventListener("click", showPostForm);
+                displayStudyPosts(); // 글 목록 표시
                 break;
             default:
                 mainContent.innerHTML = `<p>존재하지 않는 카테고리입니다.</p>`;
@@ -35,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
         document.getElementById("resume-display").innerHTML = savedContent.replace(/\n/g, "<br>");
         document.getElementById("resume-content").value = savedContent;
-        console.log("Resume loaded successfully"); // 로그 추가
     }
 
     function setupResumeEvents() {
@@ -44,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("resume-content").style.display = "block";
             document.getElementById("edit-resume").style.display = "none";
             document.getElementById("save-resume").style.display = "inline";
-            console.log("Edit button clicked"); // 로그 추가
         });
         document.getElementById("save-resume").addEventListener("click", function() {
             const content = document.getElementById("resume-content").value;
@@ -54,11 +49,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("resume-content").style.display = "none";
             document.getElementById("edit-resume").style.display = "inline";
             document.getElementById("save-resume").style.display = "none";
-            console.log("Resume saved successfully"); // 로그 추가
         });
     }
 
     window.loadContent = loadContent;
-
-    loadContent('resume');
+    loadContent('resume'); // 초기 화면 설정
 });
