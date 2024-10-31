@@ -49,12 +49,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Note 글 작성 폼 생성
     function showNoteForm(postIndex = null) {
+        // 기존 폼 제거
+        const existingForm = document.getElementById("note-form");
+        if (existingForm) existingForm.remove();
+
+        // 새 폼 생성
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
                 <textarea id="note-content" placeholder="내용을 작성하세요..."></textarea><br>
                 <button id="save-note">저장</button>
-                <button onclick="loadContent('note')">취소</button>
+                <button onclick="cancelNoteForm()">취소</button>
             </div>
         `;
 
@@ -109,6 +114,12 @@ document.addEventListener("DOMContentLoaded", function() {
         posts.splice(index, 1);
         localStorage.setItem("note", JSON.stringify(posts));
         displayNotePosts();
+    }
+
+    // Note 작성 취소
+    function cancelNoteForm() {
+        const form = document.getElementById("note-form");
+        if (form) form.remove();
     }
 
     window.loadContent = loadContent;
