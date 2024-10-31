@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const mainContent = document.getElementById("main-content");
 
-    // 카테고리별 콘텐츠 로드 함수
     function loadContent(category) {
         if (category === 'resume') {
             mainContent.innerHTML = `
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Resume 관련 함수
     function loadResume() {
         const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
         document.getElementById("resume-display").innerHTML = savedContent.replace(/\n/g, "<br>");
@@ -49,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Note 작성 폼 표시
+    // Note 글 작성 폼 생성
     function showNoteForm(postIndex = null) {
         mainContent.innerHTML += `
             <div id="note-form">
@@ -60,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
-        // 기존 글 수정 시, 기존 제목과 내용 로드
         if (postIndex !== null) {
             const posts = JSON.parse(localStorage.getItem("note")) || [];
             document.getElementById("note-title").value = posts[postIndex].title;
@@ -72,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Note 저장 함수
+    // Note 저장 기능
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
@@ -88,9 +85,9 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             posts[postIndex] = { title, content };
         }
-        localStorage.setItem("note", JSON.stringify(posts));
-        loadContent('note');
-        displayNotePosts();
+        localStorage.setItem("note", JSON.stringify(posts)); // 저장된 노트 업데이트
+        loadContent('note'); // Note 목록으로 돌아가기
+        displayNotePosts();  // Note 목록 표시
     }
 
     // Note 목록 불러오기
@@ -106,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
         `).join("");
     }
 
-    // Note 삭제 함수
+    // Note 삭제 기능
     function deleteNotePost(index) {
         const posts = JSON.parse(localStorage.getItem("note"));
         posts.splice(index, 1);
@@ -115,5 +112,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     window.loadContent = loadContent;
-    loadContent('resume');
+    loadContent('resume'); // 처음 Resume 화면 로드
 });
