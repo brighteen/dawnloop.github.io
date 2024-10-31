@@ -14,14 +14,14 @@ document.addEventListener("DOMContentLoaded", function() {
                 loadResume();
                 setupResumeEvents();
                 break;
-            case 'study':
+            case 'note':
                 mainContent.innerHTML = `
-                    <h2>공부한 흔적</h2>
-                    <ul id="saved-study"></ul>
-                    <button id="new-study-post">글 작성</button>
+                    <h2>Note</h2>
+                    <ul id="saved-note"></ul>
+                    <button id="new-note-post">글 작성</button>
                 `;
-                document.getElementById("new-study-post").addEventListener("click", () => showEditForm()); // 글 작성 버튼 연결
-                displayStudyPosts();
+                document.getElementById("new-note-post").addEventListener("click", () => showEditForm()); // 글 작성 버튼 연결
+                displayNotePosts();
                 break;
             default:
                 mainContent.innerHTML = `<p>존재하지 않는 카테고리입니다.</p>`;

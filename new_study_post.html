@@ -2,27 +2,27 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>공부한 흔적</title>
+    <title>Note</title>
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
     <script src="study_script.js" defer></script>
 </head>
 <body>
     <header>
-        <h1>공부한 흔적</h1>
+        <h1>Note</h1>
         <button onclick="loadContent('resume')">Resume</button>
-        <button onclick="loadContent('study')">공부한 흔적</button>
+        <button onclick="loadContent('note')">Note</button>
     </header>
 
     <section id="main-content">
-        <h2>공부한 흔적</h2>
-        <ul id="saved-study"></ul>
-        <button id="new-study-post">글 작성</button>
+        <h2>Note</h2>
+        <ul id="saved-note"></ul>
+        <button id="new-note-post">글 작성</button>
     </section>
 
     <script>
-        document.getElementById("new-study-post").addEventListener("click", () => showEditForm());
-        displayStudyPosts();
+        document.getElementById("new-note-post").addEventListener("click", () => showEditForm());
+        displayNotePosts();
     </script>
 </body>
 </html>
