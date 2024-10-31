@@ -20,8 +20,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button id="new-post-button">글 작성</button>
                     <ul id="saved-study"></ul>
                 `;
-                document.getElementById("new-post-button").addEventListener("click", showPostForm);
-                displayStudyPosts(); // 글 목록 표시
+                document.getElementById("new-post-button").addEventListener("click", function() {
+                    showPostForm(); // 이벤트 리스너 추가
+                });
+                displayStudyPosts(); // 저장된 글 표시
                 break;
             default:
                 mainContent.innerHTML = `<p>존재하지 않는 카테고리입니다.</p>`;

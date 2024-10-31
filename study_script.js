@@ -40,43 +40,4 @@ function displayStudyPosts() {
     `).join("");
 }
 
-function viewStudyPost(index) {
-    const posts = JSON.parse(localStorage.getItem("study"));
-    const post = posts[index];
-    document.getElementById("main-content").innerHTML = `
-        <h2>${post.title}</h2>
-        <p>${post.content}</p>
-        <button onclick="editStudyPost(${index})">수정</button>
-        <button onclick="deleteStudyPost(${index})">삭제</button>
-        <button onclick="loadContent('study')">목록으로 돌아가기</button>
-    `;
-}
-
-function editStudyPost(index) {
-    const posts = JSON.parse(localStorage.getItem("study"));
-    const post = posts[index];
-    document.getElementById("main-content").innerHTML = `
-        <h2>글 수정</h2>
-        <input type="text" id="study-title" value="${post.title}"><br>
-        <textarea id="study-content">${post.content}</textarea><br>
-        <button onclick="saveEditedStudyPost(${index})">저장</button>
-        <button onclick="loadContent('study')">취소</button>
-    `;
-}
-
-function saveEditedStudyPost(index) {
-    const posts = JSON.parse(localStorage.getItem("study"));
-    posts[index].title = document.getElementById("study-title").value;
-    posts[index].content = document.getElementById("study-content").value;
-    localStorage.setItem("study", JSON.stringify(posts));
-    loadContent('study');
-}
-
-function deleteStudyPost(index) {
-    const posts = JSON.parse(localStorage.getItem("study"));
-    posts.splice(index, 1);
-    localStorage.setItem("study", JSON.stringify(posts));
-    loadContent('study');
-}
-
-displayStudyPosts(); // 초기 글 목록 표시
+displayStudyPosts();
