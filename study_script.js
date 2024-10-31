@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const studySection = document.getElementById("main-content");
     
+    // 공부한 흔적 입력 폼 추가
     studySection.innerHTML += `
         <input type="text" id="study-title" placeholder="제목"><br>
         <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <ul id="saved-study"></ul>
     `;
 
+    // 글 저장 기능
     function saveStudy() {
         const title = document.getElementById("study-title").value;
         const content = document.getElementById("study-content").value;
@@ -22,10 +24,12 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem("study", JSON.stringify(posts));
         displayStudy();
 
+        // 입력 필드 초기화
         document.getElementById("study-title").value = "";
         document.getElementById("study-content").value = "";
     }
 
+    // 저장된 글 표시 기능
     function displayStudy() {
         const posts = JSON.parse(localStorage.getItem("study")) || [];
         const list = document.getElementById("saved-study");
@@ -38,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
         `).join("");
     }
 
+    // 글 수정 기능
     function editStudy(index) {
         const posts = JSON.parse(localStorage.getItem("study"));
         const newTitle = prompt("수정할 제목을 입력하세요:", posts[index].title);
@@ -50,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    // 글 삭제 기능
     function deleteStudy(index) {
         const posts = JSON.parse(localStorage.getItem("study"));
         posts.splice(index, 1);
@@ -57,6 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
         displayStudy();
     }
 
-    // 초기 로드 시 공부한 흔적 표시
+    // 페이지 로드 시 저장된 글 표시
     displayStudy();
 });
