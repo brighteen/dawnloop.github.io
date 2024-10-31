@@ -1,71 +1,10 @@
-/* Reset 기본 스타일 */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* 기본 레이아웃 */
-body {
-    font-family: Arial, sans-serif;
-    color: #333;
-    line-height: 1.6;
-    background-color: #f9f9f9;
-}
-
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 1em;
-    text-align: center;
-}
-
-header h1 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
-}
-
-#search-bar {
-    padding: 0.5em;
-    margin: 1em 0;
+#resume-content {
     width: 100%;
-    max-width: 300px;
+    height: 200px;
+    font-size: 16px;
+    padding: 1em;
+    margin-top: 1em;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-/* Section 기본 스타일 */
-section {
-    padding: 2em;
-    margin: 1em auto;
-    background-color: #fff;
-    border-radius: 8px;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-section h2 {
-    color: #333;
-    margin-bottom: 0.5em;
-}
-
-section button {
-    background-color: #333;
-    color: #fff;
-    padding: 0.5em 1em;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 1em;
-}
-
-section button:hover {
-    background-color: #555;
-}
-
-/* Footer 및 검색란 */
-footer {
-    text-align: center;
-    padding: 1em;
-    background-color: #333;
+    resize: vertical;
 }
