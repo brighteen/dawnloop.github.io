@@ -91,19 +91,28 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("save-resume").addEventListener("click", saveResume);
     }
 
+    function savePost(category, titleId, contentId, displayFunction) {
+        const title = document.getElementById(titleId).value;
+        const content = document.getElementById(contentId).value;
+        if (!title || !content) {
+            alert("제목과 내용을 입력해주세요.");
+            return;
+        }
+
+        const posts = JSON.parse(localStorage.getItem(category)) || [];
+        posts.push({ title, content });
+        localStorage.setItem(category, JSON.stringify(posts));
+        displayFunction();
+    }
+
     function saveStudy() {
-        const title = document.getElementById("study-title").value;
-        const content = document.getElementById("study-content").value;
-        const studies = JSON.parse(localStorage.getItem("studies")) || [];
-        studies.push({ title, content });
-        localStorage.setItem("studies", JSON.stringify(studies));
-        displayStudy();
+        savePost("studies", "study-title", "study-content", displayStudy);
     }
 
     function displayStudy() {
         const studies = JSON.parse(localStorage.getItem("studies")) || [];
-        const list = document.getElementById("saved-study");
-        list.innerHTML = studies.map((study, index) => `
+        const studyList = document.getElementById("saved-study");
+        studyList.innerHTML = studies.map((study, index) => `
             <li>
                 <strong>${study.title}</strong>: ${study.content} 
                 <button onclick="editPost('studies', ${index})">수정</button> 
@@ -131,20 +140,14 @@ document.addEventListener("DOMContentLoaded", function() {
         loadContent(category);
     }
 
-    // Daily, English, Memo 저장 및 표시 함수
     function saveDaily() {
-        const title = document.getElementById("daily-title").value;
-        const content = document.getElementById("daily-content").value;
-        const dailies = JSON.parse(localStorage.getItem("dailies")) || [];
-        dailies.push({ title, content });
-        localStorage.setItem("dailies", JSON.stringify(dailies));
-        displayDaily();
+        savePost("dailies", "daily-title", "daily-content", displayDaily);
     }
 
     function displayDaily() {
         const dailies = JSON.parse(localStorage.getItem("dailies")) || [];
-        const list = document.getElementById("saved-daily");
-        list.innerHTML = dailies.map((daily, index) => `
+        const dailyList = document.getElementById("saved-daily");
+        dailyList.innerHTML = dailies.map((daily, index) => `
             <li>
                 <strong>${daily.title}</strong>: ${daily.content} 
                 <button onclick="editPost('dailies', ${index})">수정</button> 
@@ -154,18 +157,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function saveEnglish() {
-        const title = document.getElementById("english-title").value;
-        const content = document.getElementById("english-content").value;
-        const englishEntries = JSON.parse(localStorage.getItem("englishEntries")) || [];
-        englishEntries.push({ title, content });
-        localStorage.setItem("englishEntries", JSON.stringify(englishEntries));
-        displayEnglish();
+        savePost("englishEntries", "english-title", "english-content", displayEnglish);
     }
 
     function displayEnglish() {
         const englishEntries = JSON.parse(localStorage.getItem("englishEntries")) || [];
-        const list = document.getElementById("saved-english");
-        list.innerHTML = englishEntries.map((entry, index) => `
+        const englishList = document.getElementById("saved-english");
+        englishList.innerHTML = englishEntries.map((entry, index) => `
             <li>
                 <strong>${entry.title}</strong>: ${entry.content} 
                 <button onclick="editPost('englishEntries', ${index})">수정</button> 
@@ -175,18 +173,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function saveMemo() {
-        const title = document.getElementById("memo-title").value;
-        const content = document.getElementById("memo-content").value;
-        const memos = JSON.parse(localStorage.getItem("memos")) || [];
-        memos.push({ title, content });
-        localStorage.setItem("memos", JSON.stringify(memos));
-        displayMemo();
+        savePost("memos", "memo-title", "memo-content", displayMemo);
     }
 
     function displayMemo() {
         const memos = JSON.parse(localStorage.getItem("memos")) || [];
-        const list = document.getElementById("saved-memo");
-        list.innerHTML = memos.map((memo, index) => `
+        const memoList = document.getElementById("saved-memo");
+        memoList.innerHTML = memos.map((memo, index) => `
             <li>
                 <strong>${memo.title}</strong>: ${memo.content} 
                 <button onclick="editPost('memos', ${index})">수정</button> 
