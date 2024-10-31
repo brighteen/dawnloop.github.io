@@ -26,7 +26,6 @@ function saveStudyPost() {
     localStorage.setItem("study", JSON.stringify(posts));
     displayStudyPosts();
 
-    // 입력 필드 초기화 및 폼 제거
     document.getElementById("post-form").remove();
 }
 
@@ -38,6 +37,18 @@ function displayStudyPosts() {
             <strong>${post.title}</strong>
         </li>
     `).join("");
+}
+
+function viewStudyPost(index) {
+    const posts = JSON.parse(localStorage.getItem("study"));
+    const post = posts[index];
+    document.getElementById("main-content").innerHTML = `
+        <h2>${post.title}</h2>
+        <p>${post.content}</p>
+        <button onclick="editStudyPost(${index})">수정</button>
+        <button onclick="deleteStudyPost(${index})">삭제</button>
+        <button onclick="loadContent('study')">목록으로 돌아가기</button>
+    `;
 }
 
 displayStudyPosts();
