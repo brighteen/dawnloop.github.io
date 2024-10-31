@@ -2,15 +2,27 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>공부한 흔적 작성</title>
-    <script src="study_script.js"></script>
+    <title>공부한 흔적</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+    <script src="study_script.js" defer></script>
 </head>
 <body>
-    <h1>공부한 흔적 작성</h1>
-    <textarea id="study-content" rows="5" placeholder="공부한 내용을 작성하세요"></textarea><br>
-    <button type="button" onclick="saveStudy()">저장</button>
+    <header>
+        <h1>공부한 흔적</h1>
+        <button onclick="loadContent('resume')">Resume</button>
+        <button onclick="loadContent('study')">공부한 흔적</button>
+    </header>
 
-    <h2>저장된 공부 내용</h2>
-    <ul id="saved-study"></ul>
+    <section id="main-content">
+        <h2>공부한 흔적</h2>
+        <ul id="saved-study"></ul>
+        <button id="new-study-post">글 작성</button>
+    </section>
+
+    <script>
+        document.getElementById("new-study-post").addEventListener("click", () => showEditForm());
+        displayStudyPosts();
+    </script>
 </body>
 </html>
