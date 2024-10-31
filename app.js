@@ -56,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const posts = JSON.parse(localStorage.getItem(category)) || [];
         posts.push({ title, content });
         localStorage.setItem(category, JSON.stringify(posts));
+        
+        console.log(`${category}에 저장된 글 목록:`, posts);  // 디버깅용: 저장된 글 확인
         displayPosts(category, `saved-${category}`);
 
         document.getElementById(titleId).value = ""; 
