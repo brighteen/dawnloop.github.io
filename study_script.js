@@ -1,4 +1,5 @@
 function showPostForm() {
+    console.log("Show post form button clicked"); // 로그 추가
     const studySection = document.getElementById("main-content");
     studySection.innerHTML += `
         <div id="post-form">
@@ -10,7 +11,6 @@ function showPostForm() {
     document.getElementById("save-study-post").addEventListener("click", saveStudyPost);
 }
 
-// 글 저장 기능
 function saveStudyPost() {
     const title = document.getElementById("study-title").value;
     const content = document.getElementById("study-content").value;
@@ -26,9 +26,9 @@ function saveStudyPost() {
     displayStudyPosts();
 
     document.getElementById("post-form").remove();
+    console.log("Post saved successfully"); // 로그 추가
 }
 
-// 저장된 글 목록 표시
 function displayStudyPosts() {
     const posts = JSON.parse(localStorage.getItem("study")) || [];
     const list = document.getElementById("saved-study");
@@ -37,9 +37,9 @@ function displayStudyPosts() {
             <strong>${post.title}</strong>
         </li>
     `).join("");
+    console.log("Displaying study posts", posts); // 로그 추가
 }
 
-// 글 보기, 수정 및 삭제 기능
 function viewStudyPost(index) {
     const posts = JSON.parse(localStorage.getItem("study"));
     const post = posts[index];
@@ -50,6 +50,7 @@ function viewStudyPost(index) {
         <button onclick="deleteStudyPost(${index})">삭제</button>
         <button onclick="loadContent('study')">목록으로 돌아가기</button>
     `;
+    console.log("Viewing post:", post); // 로그 추가
 }
 
 function editStudyPost(index) {
@@ -62,6 +63,7 @@ function editStudyPost(index) {
         <button onclick="saveEditedStudyPost(${index})">저장</button>
         <button onclick="loadContent('study')">취소</button>
     `;
+    console.log("Editing post:", post); // 로그 추가
 }
 
 function saveEditedStudyPost(index) {
@@ -70,6 +72,7 @@ function saveEditedStudyPost(index) {
     posts[index].content = document.getElementById("study-content").value;
     localStorage.setItem("study", JSON.stringify(posts));
     loadContent('study');
+    console.log("Post edited successfully"); // 로그 추가
 }
 
 function deleteStudyPost(index) {
@@ -77,6 +80,7 @@ function deleteStudyPost(index) {
     posts.splice(index, 1);
     localStorage.setItem("study", JSON.stringify(posts));
     loadContent('study');
+    console.log("Post deleted successfully"); // 로그 추가
 }
 
 // 초기 글 목록 표시
