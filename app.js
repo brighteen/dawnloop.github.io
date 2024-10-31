@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
             case 'study':
                 mainContent.innerHTML = `
                     <h2>공부한 흔적</h2>
+                    <input type="text" id="study-title" placeholder="제목"><br>
                     <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
                     <button onclick="saveStudy()">저장</button>
                     <ul id="saved-study"></ul>`;
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
             case 'daily':
                 mainContent.innerHTML = `
                     <h2>일상</h2>
+                    <input type="text" id="daily-title" placeholder="제목"><br>
                     <textarea id="daily-content" placeholder="일상 기록을 작성하세요..."></textarea><br>
                     <button onclick="saveDaily()">저장</button>
                     <ul id="saved-daily"></ul>`;
@@ -38,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
             case 'english':
                 mainContent.innerHTML = `
                     <h2>영어 공부</h2>
+                    <input type="text" id="english-title" placeholder="제목"><br>
                     <textarea id="english-content" placeholder="영어 공부 내용을 작성하세요..."></textarea><br>
                     <button onclick="saveEnglish()">저장</button>
                     <ul id="saved-english"></ul>`;
@@ -46,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
             case 'memo':
                 mainContent.innerHTML = `
                     <h2>메모장</h2>
+                    <input type="text" id="memo-title" placeholder="제목"><br>
                     <textarea id="memo-content" placeholder="메모를 작성하세요..."></textarea><br>
                     <button onclick="saveMemo()">저장</button>
                     <ul id="saved-memo"></ul>`;
@@ -61,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function loadResume() {
         const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
-        resumeDisplay.textContent = savedContent;
+        resumeDisplay.innerHTML = savedContent.replace(/\n/g, "<br>");  // 줄바꿈 반영
         resumeContent.value = savedContent;
     }
 
@@ -75,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function saveResume() {
         const content = resumeContent.value;
         localStorage.setItem("resumeContent", content);
-        resumeDisplay.textContent = content;
+        resumeDisplay.innerHTML = content.replace(/\n/g, "<br>"); // 줄바꿈 반영
 
         resumeDisplay.style.display = "block";
         resumeContent.style.display = "none";
@@ -91,9 +95,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function saveStudy() {
+        const title = document.getElementById("study-title").value;
         const content = document.getElementById("study-content").value;
         const studies = JSON.parse(localStorage.getItem("studies")) || [];
-        studies.push(content);
+        studies.push({ title, content });
         localStorage.setItem("studies", JSON.stringify(studies));
         displayStudy();
     }
@@ -101,13 +106,14 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayStudy() {
         const studies = JSON.parse(localStorage.getItem("studies")) || [];
         const list = document.getElementById("saved-study");
-        list.innerHTML = studies.map(study => `<li>${study}</li>`).join("");
+        list.innerHTML = studies.map(study => `<li><strong>${study.title}</strong>: ${study.content}</li>`).join("");
     }
 
     function saveDaily() {
+        const title = document.getElementById("daily-title").value;
         const content = document.getElementById("daily-content").value;
         const dailies = JSON.parse(localStorage.getItem("dailies")) || [];
-        dailies.push(content);
+        dailies.push({ title, content });
         localStorage.setItem("dailies", JSON.stringify(dailies));
         displayDaily();
     }
@@ -115,13 +121,14 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayDaily() {
         const dailies = JSON.parse(localStorage.getItem("dailies")) || [];
         const list = document.getElementById("saved-daily");
-        list.innerHTML = dailies.map(daily => `<li>${daily}</li>`).join("");
+        list.innerHTML = dailies.map(daily => `<li><strong>${daily.title}</strong>: ${daily.content}</li>`).join("");
     }
 
     function saveEnglish() {
+        const title = document.getElementById("english-title").value;
         const content = document.getElementById("english-content").value;
         const englishEntries = JSON.parse(localStorage.getItem("englishEntries")) || [];
-        englishEntries.push(content);
+        englishEntries.push({ title, content });
         localStorage.setItem("englishEntries", JSON.stringify(englishEntries));
         displayEnglish();
     }
@@ -129,13 +136,14 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayEnglish() {
         const englishEntries = JSON.parse(localStorage.getItem("englishEntries")) || [];
         const list = document.getElementById("saved-english");
-        list.innerHTML = englishEntries.map(entry => `<li>${entry}</li>`).join("");
+        list.innerHTML = englishEntries.map(entry => `<li><strong>${entry.title}</strong>: ${entry.content}</li>`).join("");
     }
 
     function saveMemo() {
+        const title = document.getElementById("memo-title").value;
         const content = document.getElementById("memo-content").value;
         const memos = JSON.parse(localStorage.getItem("memos")) || [];
-        memos.push(content);
+        memos.push({ title, content });
         localStorage.setItem("memos", JSON.stringify(memos));
         displayMemo();
     }
@@ -143,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function displayMemo() {
         const memos = JSON.parse(localStorage.getItem("memos")) || [];
         const list = document.getElementById("saved-memo");
-        list.innerHTML = memos.map(memo => `<li>${memo}</li>`).join("");
+        list.innerHTML = memos.map(memo => `<li><strong>${memo.title}</strong>: ${memo.content}</li>`).join("");
     }
 
     loadResume();
