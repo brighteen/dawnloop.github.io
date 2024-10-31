@@ -1,42 +1,62 @@
-function saveStudy() {
-    const content = document.getElementById("study-content").value;
-    const studies = JSON.parse(localStorage.getItem("studies")) || [];
-    studies.push(content);
-    localStorage.setItem("studies", JSON.stringify(studies));
-    document.getElementById("study-content").value = "";
-    displayStudy();
-}
+document.addEventListener("DOMContentLoaded", function() {
+    const studySection = document.getElementById("main-content");
+    
+    studySection.innerHTML += `
+        <input type="text" id="study-title" placeholder="제목"><br>
+        <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
+        <button onclick="saveStudy()">저장</button>
+        <ul id="saved-study"></ul>
+    `;
 
-function displayStudy() {
-    const studies = JSON.parse(localStorage.getItem("studies")) || [];
-    const list = document.getElementById("saved-study");
-    list.innerHTML = "";
+    function saveStudy() {
+        const title = document.getElementById("study-title").value;
+        const content = document.getElementById("study-content").value;
 
-    studies.forEach((study, index) => {
-        const listItem = document.createElement("li");
-        const textSpan = document.createElement("span");
-        textSpan.textContent = `#${index + 1} - ${study}`;
+        if (!title || !content) {
+            alert("제목과 내용을 입력해주세요.");
+            return;
+        }
 
-        const editButton = document.createElement("button");
-        editButton.textContent = "수정";
-        editButton.onclick = function() {
-            editStudy(index);
-        };
+        const posts = JSON.parse(localStorage.getItem("study")) || [];
+        posts.push({ title, content });
+        localStorage.setItem("study", JSON.stringify(posts));
+        displayStudy();
 
-        listItem.appendChild(textSpan);
-        listItem.appendChild(editButton);
-        list.appendChild(listItem);
-    });
-}
+        document.getElementById("study-title").value = "";
+        document.getElementById("study-content").value = "";
+    }
 
-function editStudy(index) {
-    const studies = JSON.parse(localStorage.getItem("studies"));
-    const newContent = prompt("수정할 내용을 입력하세요:", studies[index]);
-    if (newContent !== null) {
-        studies[index] = newContent;
-        localStorage.setItem("studies", JSON.stringify(studies));
+    function displayStudy() {
+        const posts = JSON.parse(localStorage.getItem("study")) || [];
+        const list = document.getElementById("saved-study");
+        list.innerHTML = posts.map((post, index) => `
+            <li>
+                <strong>${post.title}</strong>: ${post.content} 
+                <button onclick="editStudy(${index})">수정</button> 
+                <button onclick="deleteStudy(${index})">삭제</button>
+            </li>
+        `).join("");
+    }
+
+    function editStudy(index) {
+        const posts = JSON.parse(localStorage.getItem("study"));
+        const newTitle = prompt("수정할 제목을 입력하세요:", posts[index].title);
+        const newContent = prompt("수정할 내용을 입력하세요:", posts[index].content);
+        if (newTitle !== null && newContent !== null) {
+            posts[index].title = newTitle;
+            posts[index].content = newContent;
+            localStorage.setItem("study", JSON.stringify(posts));
+            displayStudy();
+        }
+    }
+
+    function deleteStudy(index) {
+        const posts = JSON.parse(localStorage.getItem("study"));
+        posts.splice(index, 1);
+        localStorage.setItem("study", JSON.stringify(posts));
         displayStudy();
     }
-}
 
-document.addEventListener("DOMContentLoaded", displayStudy);
+    // 초기 로드 시 공부한 흔적 표시
+    displayStudy();
+});
