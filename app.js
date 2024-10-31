@@ -1,23 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const mainContent = document.getElementById("main-content");
-    const resumeContent = document.getElementById("resume-content");
-    const resumeDisplay = document.getElementById("resume-display");
-    const editButton = document.getElementById("edit-resume");
-    const saveButton = document.getElementById("save-resume");
 
     function loadContent(category) {
         switch (category) {
-            case 'resume':
-                loadResume();
-                mainContent.innerHTML = `
-                    <h2>Resume</h2>
-                    <p id="resume-display"></p>
-                    <textarea id="resume-content" style="display:none;" placeholder="여기에 나의 소개와 정보를 입력하세요..."></textarea><br>
-                    <button id="edit-resume">수정</button>
-                    <button id="save-resume" style="display:none;">저장</button>
-                `;
-                setupResumeEvents();
-                break;
             case 'study':
                 mainContent.innerHTML = `
                     <h2>공부한 흔적</h2>
@@ -54,41 +39,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     <ul id="saved-memo"></ul>`;
                 displayMemo();
                 break;
-            case 'guestbook':
-                mainContent.innerHTML = `<h2>방명록</h2><p>방명록을 여기에 추가할 수 있습니다.</p>`;
-                break;
             default:
                 mainContent.innerHTML = `<p>존재하지 않는 카테고리입니다.</p>`;
         }
-    }
-
-    function loadResume() {
-        const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
-        resumeDisplay.innerHTML = savedContent.replace(/\n/g, "<br>");
-        resumeContent.value = savedContent;
-    }
-
-    function enableEditMode() {
-        resumeDisplay.style.display = "none";
-        resumeContent.style.display = "block";
-        editButton.style.display = "none";
-        saveButton.style.display = "inline";
-    }
-
-    function saveResume() {
-        const content = resumeContent.value;
-        localStorage.setItem("resumeContent", content);
-        resumeDisplay.innerHTML = content.replace(/\n/g, "<br>");
-        resumeDisplay.style.display = "block";
-        resumeContent.style.display = "none";
-        editButton.style.display = "inline";
-        saveButton.style.display = "none";
-        alert("Resume이 저장되었습니다.");
-    }
-
-    function setupResumeEvents() {
-        document.getElementById("edit-resume").addEventListener("click", enableEditMode);
-        document.getElementById("save-resume").addEventListener("click", saveResume);
     }
 
     function savePost(category, titleId, contentId, displayFunction) {
@@ -103,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function() {
         posts.push({ title, content });
         localStorage.setItem(category, JSON.stringify(posts));
         displayFunction();
+        document.getElementById(titleId).value = ""; // 입력 필드 초기화
+        document.getElementById(contentId).value = ""; // 입력 필드 초기화
     }
 
     function saveStudy() {
@@ -119,25 +74,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button onclick="deletePost('studies', ${index})">삭제</button>
             </li>
         `).join("");
-    }
-
-    function editPost(category, index) {
-        const posts = JSON.parse(localStorage.getItem(category));
-        const newTitle = prompt("수정할 제목을 입력하세요:", posts[index].title);
-        const newContent = prompt("수정할 내용을 입력하세요:", posts[index].content);
-        if (newTitle !== null && newContent !== null) {
-            posts[index].title = newTitle;
-            posts[index].content = newContent;
-            localStorage.setItem(category, JSON.stringify(posts));
-            loadContent(category);
-        }
-    }
-
-    function deletePost(category, index) {
-        const posts = JSON.parse(localStorage.getItem(category));
-        posts.splice(index, 1);
-        localStorage.setItem(category, JSON.stringify(posts));
-        loadContent(category);
     }
 
     function saveDaily() {
@@ -188,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function() {
         `).join("");
     }
 
-    loadResume();
-    setupResumeEvents();
+    // 저장 후 입력 필드 초기화 추가
     window.loadContent = loadContent;
 });
