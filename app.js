@@ -17,12 +17,10 @@ document.addEventListener("DOMContentLoaded", function() {
             case 'study':
                 mainContent.innerHTML = `
                     <h2>공부한 흔적</h2>
-                    <button id="new-post-button">글 작성</button>
                     <ul id="saved-study"></ul>
+                    <button id="new-study-post">글 작성</button>
                 `;
-                setTimeout(() => {
-                    document.getElementById("new-post-button").addEventListener("click", showPostForm);
-                }, 0); // 지연 후 이벤트 연결
+                document.getElementById("new-study-post").addEventListener("click", () => showEditForm()); // 글 작성 버튼 연결
                 displayStudyPosts();
                 break;
             default:

@@ -1,18 +1,25 @@
-function showPostForm() {
-    const studySection = document.getElementById("main-content");
-    if (!document.getElementById("post-form")) { // 중복 폼 생성 방지
-        studySection.innerHTML += `
-            <div id="post-form">
-                <input type="text" id="study-title" placeholder="제목"><br>
-                <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
-                <button id="save-study-post">글 저장</button>
-            </div>
-        `;
-        document.getElementById("save-study-post").addEventListener("click", saveStudyPost);
+function showEditForm(postIndex = null) {
+    const mainContent = document.getElementById("main-content");
+    mainContent.innerHTML = `
+        <h2>${postIndex === null ? "글 작성" : "글 수정"}</h2>
+        <input type="text" id="study-title" placeholder="제목"><br>
+        <textarea id="study-content" placeholder="공부한 내용을 작성하세요..."></textarea><br>
+        <button id="save-study-post">저장</button>
+        <button onclick="loadContent('study')">취소</button>
+    `;
+
+    if (postIndex !== null) {
+        const posts = JSON.parse(localStorage.getItem("study")) || [];
+        document.getElementById("study-title").value = posts[postIndex].title;
+        document.getElementById("study-content").value = posts[postIndex].content;
     }
+
+    document.getElementById("save-study-post").addEventListener("click", function() {
+        saveStudyPost(postIndex);
+    });
 }
 
-function saveStudyPost() {
+function saveStudyPost(postIndex = null) {
     const title = document.getElementById("study-title").value;
     const content = document.getElementById("study-content").value;
 
@@ -22,33 +29,33 @@ function saveStudyPost() {
     }
 
     const posts = JSON.parse(localStorage.getItem("study")) || [];
-    posts.push({ title, content });
+    if (postIndex === null) {
+        posts.push({ title, content });
+    } else {
+        posts[postIndex] = { title, content };
+    }
     localStorage.setItem("study", JSON.stringify(posts));
+    loadContent('study');
     displayStudyPosts();
-
-    document.getElementById("post-form").remove();
 }
 
 function displayStudyPosts() {
     const posts = JSON.parse(localStorage.getItem("study")) || [];
     const list = document.getElementById("saved-study");
     list.innerHTML = posts.map((post, index) => `
-        <li onclick="viewStudyPost(${index})">
-            <strong>${post.title}</strong>
+        <li>
+            <strong>${post.title}</strong> - ${post.content}
+            <button onclick="showEditForm(${index})">수정</button>
+            <button onclick="deleteStudyPost(${index})">삭제</button>
         </li>
     `).join("");
 }
 
-function viewStudyPost(index) {
+function deleteStudyPost(index) {
     const posts = JSON.parse(localStorage.getItem("study"));
-    const post = posts[index];
-    document.getElementById("main-content").innerHTML = `
-        <h2>${post.title}</h2>
-        <p>${post.content}</p>
-        <button onclick="editStudyPost(${index})">수정</button>
-        <button onclick="deleteStudyPost(${index})">삭제</button>
-        <button onclick="loadContent('study')">목록으로 돌아가기</button>
-    `;
+    posts.splice(index, 1);
+    localStorage.setItem("study", JSON.stringify(posts));
+    displayStudyPosts();
 }
 
 displayStudyPosts();
