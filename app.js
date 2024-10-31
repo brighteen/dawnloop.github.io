@@ -1,61 +1,40 @@
-function searchAllPosts() {
-    const query = document.getElementById("search-bar").value.toLowerCase();
-
-    if (!query.trim()) {
-        alert("검색어를 입력해 주세요.");
-        return;
-    }
-
-    // 새로운 창 열기 및 기본 HTML 구성
-    const resultWindow = window.open("", "_blank", "width=600,height=400");
-    resultWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-            <meta charset="UTF-8">
-            <title>검색 결과</title>
-        </head>
-        <body>
-            <h1>검색 결과</h1>
-            <ul id="search-results"></ul>
-        </body>
-        </html>
-    `);
-
-    const resultDoc = resultWindow.document;
-    const categories = ["resumes", "studies", "dailies", "englishEntries", "memos"];
-    const categoryNames = {
-        resumes: "Resume",
-        studies: "공부한 흔적",
-        dailies: "일상",
-        englishEntries: "영어 공부",
-        memos: "메모장"
-    };
-
-    let hasResults = false;
-    categories.forEach(category => {
-        const posts = JSON.parse(localStorage.getItem(category)) || [];
-        posts.forEach((post, index) => {
-            if (post.toLowerCase().includes(query)) {
-                hasResults = true;
-                const resultItem = resultDoc.createElement("li");
-                resultItem.innerHTML = `<strong>${categoryNames[category]}</strong> #${index + 1}: ${post}`;
-                resultDoc.getElementById("search-results").appendChild(resultItem);
-            }
-        });
-    });
-
-    if (!hasResults) {
-        resultDoc.getElementById("search-results").innerHTML = "<p>검색 결과가 없습니다.</p>";
-    }
-}
-
 document.addEventListener("DOMContentLoaded", function() {
-    const searchBar = document.getElementById("search-bar");
-    searchBar.addEventListener("keyup", function(event) {
-        if (event.key === "Enter") {
-            searchAllPosts();
-        }
-    });
-    document.getElementById("search-button").addEventListener("click", searchAllPosts);
+    const resumeContent = document.getElementById("resume-content");
+    const resumeDisplay = document.getElementById("resume-display");
+    const editButton = document.getElementById("edit-resume");
+    const saveButton = document.getElementById("save-resume");
+
+    // Resume 내용 불러오기
+    function loadResume() {
+        const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
+        resumeDisplay.textContent = savedContent;
+        resumeContent.value = savedContent;
+    }
+
+    // 수정 모드 활성화
+    function enableEditMode() {
+        resumeDisplay.style.display = "none";
+        resumeContent.style.display = "block";
+        editButton.style.display = "none";
+        saveButton.style.display = "inline";
+    }
+
+    // Resume 저장 기능
+    function saveResume() {
+        const content = resumeContent.value;
+        localStorage.setItem("resumeContent", content);
+        resumeDisplay.textContent = content;
+
+        resumeDisplay.style.display = "block";
+        resumeContent.style.display = "none";
+        editButton.style.display = "inline";
+        saveButton.style.display = "none";
+
+        alert("Resume이 저장되었습니다.");
+    }
+
+    editButton.addEventListener("click", enableEditMode);
+    saveButton.addEventListener("click", saveResume);
+
+    loadResume();
 });

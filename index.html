@@ -9,7 +9,6 @@
 <body>
     <header>
         <h1>나의 블로그</h1>
-        <!-- 내비게이션 메뉴 -->
         <nav>
             <button onclick="location.href='index.html'">Resume</button>
             <button onclick="location.href='new_study_post.html'">공부한 흔적</button>
@@ -23,8 +22,10 @@
     <!-- Resume 카테고리 -->
     <section id="resume">
         <h2>Resume</h2>
-        <textarea id="resume-content" placeholder="여기에 나의 소개와 정보를 입력하세요..."></textarea><br>
-        <button id="save-resume">저장</button>
+        <p id="resume-display"></p>
+        <textarea id="resume-content" style="display:none;" placeholder="여기에 나의 소개와 정보를 입력하세요..."></textarea><br>
+        <button id="edit-resume">수정</button>
+        <button id="save-resume" style="display:none;">저장</button>
     </section>
 </body>
 </html>
