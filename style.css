@@ -34,18 +34,16 @@ nav button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-textarea, input[type="text"] {
+/* Resume textarea 크기 조정 */
+#resume-content {
     width: 100%;
-    padding: 1em;
+    height: 300px; /* 크기를 크게 조정 */
     font-size: 16px;
+    padding: 1em;
     margin-top: 1em;
     border: 1px solid #ccc;
     border-radius: 4px;
     resize: vertical;
-}
-
-textarea {
-    height: 200px;
 }
 
 button {
