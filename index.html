@@ -2,51 +2,29 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>나의 블로그</title>
+    <title>나의 블로그 - Resume</title>
     <link rel="stylesheet" href="style.css">
     <script src="app.js"></script>
 </head>
 <body>
     <header>
         <h1>나의 블로그</h1>
-        <input type="text" id="search-bar" placeholder="검색어를 입력하세요...">
-        <button id="search-button">검색</button>
+        <!-- 내비게이션 메뉴 -->
+        <nav>
+            <button onclick="location.href='index.html'">Resume</button>
+            <button onclick="location.href='new_study_post.html'">공부한 흔적</button>
+            <button onclick="location.href='new_daily_post.html'">일상</button>
+            <button onclick="location.href='new_english_post.html'">영어 공부</button>
+            <button onclick="location.href='new_memo.html'">메모장</button>
+            <button onclick="location.href='guestbook.html'">방명록</button>
+        </nav>
     </header>
 
+    <!-- Resume 카테고리 -->
     <section id="resume">
         <h2>Resume</h2>
-        <p>간단한 나의 소개와 경력</p>
-        <button onclick="location.href='resume_edit.html'">수정</button>
-    </section>
-
-    <section id="study">
-        <h2>공부한 흔적</h2>
-        <p>공부 기록을 작성할 수 있는 공간</p>
-        <button onclick="location.href='new_study_post.html'">글 작성</button>
-    </section>
-
-    <section id="daily">
-        <h2>일상</h2>
-        <p>요리, 운동, 여행 등의 기록</p>
-        <button onclick="location.href='new_daily_post.html'">글 작성</button>
-    </section>
-
-    <section id="english">
-        <h2>영어 공부</h2>
-        <p>영어 학습 내용을 기록하는 공간</p>
-        <button onclick="location.href='new_english_post.html'">글 작성</button>
-    </section>
-
-    <section id="memo">
-        <h2>메모장</h2>
-        <p>아이디어나 생각을 간단히 기록할 수 있는 공간</p>
-        <button onclick="location.href='new_memo.html'">메모 추가</button>
-    </section>
-
-    <section id="guestbook">
-        <h2>방명록</h2>
-        <p>방문자가 남긴 인사말을 확인할 수 있는 공간</p>
-        <button onclick="location.href='guestbook.html'">글 작성</button>
+        <textarea id="resume-content" placeholder="여기에 나의 소개와 정보를 입력하세요..."></textarea><br>
+        <button id="save-resume">저장</button>
     </section>
 </body>
 </html>
