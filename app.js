@@ -38,3 +38,25 @@ document.addEventListener("DOMContentLoaded", function() {
 
     loadResume();
 });
+
+// loadContent 함수 추가
+function loadContent(category) {
+    const content = document.getElementById('content');
+    
+    switch (category) {
+        case 'home':
+            content.innerHTML = '<p>홈 화면에 오신 것을 환영합니다!</p>';
+            break;
+        case 'category1':
+            content.innerHTML = '<p>카테고리 1의 내용입니다.</p>';
+            break;
+        case 'category2':
+            content.innerHTML = '<p>카테고리 2의 내용입니다.</p>';
+            break;
+        case 'category3':
+            content.innerHTML = '<p>카테고리 3의 내용입니다.</p>';
+            break;
+        default:
+            content.innerHTML = '<p>오류: 해당 콘텐츠를 찾을 수 없습니다.</p>';
+    }
+}

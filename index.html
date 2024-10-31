@@ -2,30 +2,24 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>나의 블로그 - Resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여명의 블로그</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js"></script>
 </head>
 <body>
     <header>
-        <h1>나의 블로그</h1>
+        <h1>여명의 블로그</h1>
         <nav>
-            <button onclick="location.href='index.html'">Resume</button>
-            <button onclick="location.href='new_study_post.html'">공부한 흔적</button>
-            <button onclick="location.href='new_daily_post.html'">일상</button>
-            <button onclick="location.href='new_english_post.html'">영어 공부</button>
-            <button onclick="location.href='new_memo.html'">메모장</button>
-            <button onclick="location.href='guestbook.html'">방명록</button>
+            <button onclick="loadContent('home')">홈</button>
+            <button onclick="loadContent('category1')">카테고리 1</button>
+            <button onclick="loadContent('category2')">카테고리 2</button>
+            <button onclick="loadContent('category3')">카테고리 3</button>
         </nav>
     </header>
-
-    <!-- Resume 카테고리 -->
-    <section id="resume">
-        <h2>Resume</h2>
-        <p id="resume-display"></p>
-        <textarea id="resume-content" style="display:none;" placeholder="여기에 나의 소개와 정보를 입력하세요..."></textarea><br>
-        <button id="edit-resume">수정</button>
-        <button id="save-resume" style="display:none;">저장</button>
-    </section>
+    <main id="content">
+        <!-- 이 부분에 콘텐츠가 바뀌어 표시됩니다 -->
+        <p>홈 화면에 오신 것을 환영합니다!</p>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
