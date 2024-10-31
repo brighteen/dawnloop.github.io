@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     function loadContent(category) {
         switch (category) {
             case 'resume':
-                loadResume();
                 mainContent.innerHTML = `
                     <h2>Resume</h2>
                     <p id="resume-display"></p>
@@ -12,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button id="edit-resume">수정</button>
                     <button id="save-resume" style="display:none;">저장</button>
                 `;
+                loadResume();
                 setupResumeEvents();
                 break;
             case 'study':
