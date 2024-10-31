@@ -4,25 +4,31 @@
     <meta charset="UTF-8">
     <title>Note</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
     <script src="study_script.js" defer></script>
 </head>
 <body>
     <header>
         <h1>Note</h1>
-        <button onclick="loadContent('resume')">Resume</button>
-        <button onclick="loadContent('note')">Note</button>
+        <button onclick="goToResume()">Resume</button>
+        <button onclick="goToNote()">Note</button>
     </header>
 
     <section id="main-content">
-        <h2>Note</h2>
+        <h2>Note 작성</h2>
         <ul id="saved-note"></ul>
         <button id="new-note-post">글 작성</button>
     </section>
 
     <script>
-        document.getElementById("new-note-post").addEventListener("click", () => showEditForm());
-        displayNotePosts();
+        // Resume 페이지로 이동
+        function goToResume() {
+            window.location.href = "index.html";
+        }
+
+        // Note 페이지로 이동 (현재 페이지에서 새로고침)
+        function goToNote() {
+            window.location.href = "new_study_post.html";
+        }
     </script>
 </body>
 </html>
