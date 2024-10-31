@@ -1,5 +1,3 @@
-// 공부한 흔적 페이지에 글 작성, 저장, 조회, 수정, 삭제 기능을 추가합니다.
-
 function showPostForm() {
     const studySection = document.getElementById("main-content");
     studySection.innerHTML += `
@@ -27,7 +25,6 @@ function saveStudyPost() {
     localStorage.setItem("study", JSON.stringify(posts));
     displayStudyPosts();
 
-    // 입력 필드 초기화
     document.getElementById("post-form").remove();
 }
 
@@ -82,5 +79,5 @@ function deleteStudyPost(index) {
     loadContent('study');
 }
 
-// 페이지 로드 시 저장된 글 표시
+// 초기 글 목록 표시
 displayStudyPosts();

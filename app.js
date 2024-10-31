@@ -20,7 +20,13 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button id="new-post-button">글 작성</button>
                     <ul id="saved-study"></ul>
                 `;
-                document.getElementById("new-post-button").addEventListener("click", showPostForm);
+
+                // study_script.js 로드
+                const script = document.createElement("script");
+                script.src = "study_script.js";
+                document.body.appendChild(script);
+
+                // 글 목록 표시 함수 호출
                 displayStudyPosts();
                 break;
             default:
