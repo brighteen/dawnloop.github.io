@@ -4,6 +4,42 @@ document.addEventListener("DOMContentLoaded", function() {
     const editButton = document.getElementById("edit-resume");
     const saveButton = document.getElementById("save-resume");
 
+    // 카테고리별 내용 로드 함수
+    function loadContent(category) {
+        const mainContent = document.getElementById("main-content");
+
+        switch (category) {
+            case 'resume':
+                loadResume();
+                mainContent.innerHTML = `
+                    <h2>Resume</h2>
+                    <p id="resume-display"></p>
+                    <textarea id="resume-content" style="display:none;" placeholder="여기에 나의 소개와 정보를 입력하세요..."></textarea><br>
+                    <button id="edit-resume">수정</button>
+                    <button id="save-resume" style="display:none;">저장</button>
+                `;
+                setupResumeEvents();
+                break;
+            case 'study':
+                mainContent.innerHTML = `<h2>공부한 흔적</h2><p>공부한 내용을 여기에 추가할 수 있습니다.</p>`;
+                break;
+            case 'daily':
+                mainContent.innerHTML = `<h2>일상</h2><p>일상 기록을 여기에 추가할 수 있습니다.</p>`;
+                break;
+            case 'english':
+                mainContent.innerHTML = `<h2>영어 공부</h2><p>영어 공부 내용을 여기에 추가할 수 있습니다.</p>`;
+                break;
+            case 'memo':
+                mainContent.innerHTML = `<h2>메모장</h2><p>메모를 여기에 추가할 수 있습니다.</p>`;
+                break;
+            case 'guestbook':
+                mainContent.innerHTML = `<h2>방명록</h2><p>방명록을 여기에 추가할 수 있습니다.</p>`;
+                break;
+            default:
+                mainContent.innerHTML = `<p>존재하지 않는 카테고리입니다.</p>`;
+        }
+    }
+
     // Resume 내용 불러오기
     function loadResume() {
         const savedContent = localStorage.getItem("resumeContent") || "소개 내용을 작성해 주세요.";
@@ -33,30 +69,15 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("Resume이 저장되었습니다.");
     }
 
-    editButton.addEventListener("click", enableEditMode);
-    saveButton.addEventListener("click", saveResume);
-
-    loadResume();
-});
-
-// loadContent 함수 추가
-function loadContent(category) {
-    const content = document.getElementById('content');
-    
-    switch (category) {
-        case 'home':
-            content.innerHTML = '<p>홈 화면에 오신 것을 환영합니다!</p>';
-            break;
-        case 'category1':
-            content.innerHTML = '<p>카테고리 1의 내용입니다.</p>';
-            break;
-        case 'category2':
-            content.innerHTML = '<p>카테고리 2의 내용입니다.</p>';
-            break;
-        case 'category3':
-            content.innerHTML = '<p>카테고리 3의 내용입니다.</p>';
-            break;
-        default:
-            content.innerHTML = '<p>오류: 해당 콘텐츠를 찾을 수 없습니다.</p>';
+    function setupResumeEvents() {
+        document.getElementById("edit-resume").addEventListener("click", enableEditMode);
+        document.getElementById("save-resume").addEventListener("click", saveResume);
     }
-}
+
+    // 초기 로드
+    loadResume();
+    setupResumeEvents();
+
+    // 전역에서 사용 가능하게 설정
+    window.loadContent = loadContent;
+});
