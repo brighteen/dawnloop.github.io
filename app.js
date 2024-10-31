@@ -47,14 +47,19 @@ document.addEventListener("DOMContentLoaded", function() {
     function savePost(category, titleId, contentId, displayFunction) {
         const title = document.getElementById(titleId).value;
         const content = document.getElementById(contentId).value;
+    
         if (!title || !content) {
             alert("제목과 내용을 입력해주세요.");
             return;
         }
-
+    
         const posts = JSON.parse(localStorage.getItem(category)) || [];
         posts.push({ title, content });
         localStorage.setItem(category, JSON.stringify(posts));
+    
+        // 디버깅용 콘솔 출력
+        console.log(`${category}에 저장된 데이터:`, posts);
+    
         displayFunction();
         document.getElementById(titleId).value = ""; // 입력 필드 초기화
         document.getElementById(contentId).value = ""; // 입력 필드 초기화
