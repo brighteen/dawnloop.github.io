@@ -1,13 +1,16 @@
 function showEditForm(postIndex = null) {
     const mainContent = document.getElementById("main-content");
-    mainContent.innerHTML = `
-        <h2>${postIndex === null ? "글 작성" : "글 수정"}</h2>
-        <input type="text" id="note-title" placeholder="제목"><br>
-        <textarea id="note-content" placeholder="내용을 작성하세요..."></textarea><br>
-        <button id="save-note-post">저장</button>
-        <button onclick="loadContent('note')">취소</button>
+    mainContent.innerHTML += `
+        <div id="post-form">
+            <h2>${postIndex === null ? "글 작성" : "글 수정"}</h2>
+            <input type="text" id="note-title" placeholder="제목"><br>
+            <textarea id="note-content" placeholder="내용을 작성하세요..."></textarea><br>
+            <button id="save-note-post">저장</button>
+            <button onclick="loadContent('note')">취소</button>
+        </div>
     `;
 
+    // 수정일 경우, 기존 값 로드
     if (postIndex !== null) {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         document.getElementById("note-title").value = posts[postIndex].title;
@@ -58,4 +61,5 @@ function deleteNotePost(index) {
     displayNotePosts();
 }
 
+// 페이지 로드 시 글 목록 표시
 displayNotePosts();

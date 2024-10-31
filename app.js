@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <ul id="saved-note"></ul>
                     <button id="new-note-post">글 작성</button>
                 `;
-                document.getElementById("new-note-post").addEventListener("click", () => showEditForm()); // 글 작성 버튼 연결
+                document.getElementById("new-note-post").addEventListener("click", showEditForm); // 글 작성 버튼 연결
                 displayNotePosts();
                 break;
             default:
