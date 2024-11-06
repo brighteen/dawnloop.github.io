@@ -47,13 +47,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Note 글 작성 폼 생성
     function showNoteForm(postIndex = null) {
-        // 기존 폼 제거
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
 
-        // 새 폼 생성
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
@@ -74,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Note 저장 기능
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
@@ -90,12 +86,10 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             posts[postIndex] = { title, content };
         }
-        localStorage.setItem("note", JSON.stringify(posts)); // 저장된 노트 업데이트
-        loadContent('note'); // Note 목록으로 돌아가기
-        displayNotePosts();  // Note 목록 표시
+        localStorage.setItem("note", JSON.stringify(posts));
+        displayNotePosts(); // Note 목록을 즉시 업데이트
     }
 
-    // Note 목록 불러오기
     function displayNotePosts() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const list = document.getElementById("saved-note");
@@ -108,7 +102,6 @@ document.addEventListener("DOMContentLoaded", function() {
         `).join("");
     }
 
-    // Note 삭제 기능
     function deleteNotePost(index) {
         const posts = JSON.parse(localStorage.getItem("note"));
         posts.splice(index, 1);
@@ -116,12 +109,11 @@ document.addEventListener("DOMContentLoaded", function() {
         displayNotePosts();
     }
 
-    // Note 작성 취소
     function cancelNoteForm() {
         const form = document.getElementById("note-form");
         if (form) form.remove();
     }
 
     window.loadContent = loadContent;
-    loadContent('resume'); // 처음 Resume 화면 로드
+    loadContent('resume');
 });
