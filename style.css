@@ -71,3 +71,30 @@ button:hover {
 .clickable-note:hover {
     background-color: #f0f0f0;
 }
+
+/* app.css 또는 style.css 파일에 추가 */
+
+#saved-note {
+    list-style-type: none; /* 기본 목록 스타일 제거 */
+    padding: 0;
+}
+
+#saved-note li {
+    background-color: #f9f9f9; /* 기본 배경색 */
+    border: 1px solid #ddd; /* 박스 테두리 */
+    border-radius: 5px; /* 둥근 모서리 */
+    padding: 10px; /* 내용 여백 */
+    margin-bottom: 10px; /* 항목 간격 */
+    transition: background-color 0.3s, box-shadow 0.3s; /* 부드러운 효과 */
+}
+
+#saved-note li:hover {
+    background-color: #f1f1f1; /* 마우스를 올렸을 때 배경색 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 마우스를 올렸을 때 박스 그림자 */
+}
+
+.clickable-note {
+    cursor: pointer; /* 클릭 가능한 커서 */
+    font-weight: bold; /* 글 제목을 볼드체로 */
+    color: #333; /* 글자 색상 */
+}
