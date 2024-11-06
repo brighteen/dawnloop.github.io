@@ -75,6 +75,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const post = posts[index];
     
+        // 글 목록 숨기기
+        document.getElementById("saved-note").style.display = "none";
+        document.getElementById("new-note-post").style.display = "none";
+    
         // 기존 폼 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
@@ -82,13 +86,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
     
+        // 선택한 글만 표시
         mainContent.innerHTML += `
             <div id="note-detail">
                 <h3>${post.title}</h3>
-                <p>${post.content.replace(/\n/g, "<br>")}</p><br> <!-- 줄바꿈을 <br>로 변환 -->
+                <p>${post.content.replace(/\n/g, "<br>")}</p><br>
                 <button id="edit-note">수정</button>
                 <button id="delete-note">삭제</button>
-                <button onclick="cancelNoteDetail()">취소</button>
+                <button onclick="openNoteList()">목록 열기</button>
             </div>
         `;
     
@@ -99,7 +104,22 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("delete-note").addEventListener("click", function() {
             deleteNotePost(index);
         });
-    }    
+    }   
+
+
+    // 글 목록으로 돌아가기 위한 함수
+    function openNoteList() {
+        // 글 세부 보기 폼 제거
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
+
+        // 글 목록 다시 보이기
+        document.getElementById("saved-note").style.display = "block";
+        document.getElementById("new-note-post").style.display = "block";
+        
+        // 글 목록 업데이트
+        displayNotePosts();
+    }
     
 
     function editNoteForm(index) {
