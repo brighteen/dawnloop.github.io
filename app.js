@@ -149,35 +149,23 @@ document.addEventListener("DOMContentLoaded", function() {
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value.trim();
         const content = document.getElementById("note-content").value.trim();
-
+    
         if (!title || !content) {
             alert("제목과 내용을 입력해주세요.");
             return;
         }
-
-        // 글을 저장할 배열
+    
         const posts = JSON.parse(localStorage.getItem("note")) || [];
-
         if (postIndex === null) {
-            // 새 글 작성
             posts.push({ title, content });
         } else {
-            // 기존 글 수정
             posts[postIndex] = { title, content };
         }
-
-        // 변경된 배열을 localStorage에 저장
+    
         localStorage.setItem("note", JSON.stringify(posts));
-
-        // 글 목록 새로고침
-        displayNotePosts();
-
-        // 글 작성 폼과 글 수정 폼 제거
-        const form = document.getElementById("note-form");
-        if (form) form.remove();
-
-        const detail = document.getElementById("note-detail");
-        if (detail) detail.remove();
+    
+        // 글 저장 후 목록 화면으로 돌아가기
+        openNoteList();
     }
 
     function displayNotePosts() {
@@ -197,10 +185,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const posts = JSON.parse(localStorage.getItem("note"));
         posts.splice(index, 1);
         localStorage.setItem("note", JSON.stringify(posts));
-        displayNotePosts();
-
-        const detail = document.getElementById("note-detail");
-        if (detail) detail.remove();
+    
+        // 글 삭제 후 목록 화면으로 돌아가기
+        openNoteList();
     }
 
     function cancelNoteForm() {
