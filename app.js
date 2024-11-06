@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <ul id="saved-note"></ul>
             `;
             document.getElementById("new-note-post").addEventListener("click", showNoteForm);
-            displayNotePosts(); // Note 목록 즉시 표시
+            displayNotePosts();
         }
     }
 
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function showNoteForm(postIndex = null) {
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
-    
+
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
@@ -59,30 +59,30 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button onclick="cancelNoteForm()">취소</button>
             </div>
         `;
-    
+
         const posts = JSON.parse(localStorage.getItem("note")) || [];
-    
-        // postIndex가 유효한 경우에만 기존 제목과 내용을 로드
+
         if (postIndex !== null && postIndex >= 0 && postIndex < posts.length) {
             document.getElementById("note-title").value = posts[postIndex].title;
             document.getElementById("note-content").value = posts[postIndex].content;
         }
-    
-        document.getElementById("save-note").addEventListener("click", function() {
-            saveNotePost(postIndex);
+
+        document.getElementById("save-note").addEventListener("click", function(event) {
+            saveNotePost(postIndex, event);
         });
     }
-    
 
-    function saveNotePost(postIndex = null) {
+    function saveNotePost(postIndex = null, event) {
+        if (event) event.preventDefault();
+
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
-    
+
         if (!title || !content) {
             alert("제목과 내용을 입력해주세요.");
             return;
         }
-    
+
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         if (postIndex === null) {
             posts.push({ title, content });
@@ -90,15 +90,12 @@ document.addEventListener("DOMContentLoaded", function() {
             posts[postIndex] = { title, content };
         }
         localStorage.setItem("note", JSON.stringify(posts));
-    
-        console.log("저장된 노트 목록:", posts); // 저장된 내용을 콘솔에 출력
+        console.log("저장된 노트 목록:", posts);
         displayNotePosts();
     }
-    
 
     function displayNotePosts() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
-        console.log("로컬스토리지에서 가져온 노트 목록:", posts); // 저장된 내용을 콘솔에 출력
         const list = document.getElementById("saved-note");
         list.innerHTML = posts.map((post, index) => `
             <li>
@@ -122,5 +119,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     window.loadContent = loadContent;
-    loadContent('resume'); // 처음 Resume 화면 로드
+    loadContent('resume');
 });
