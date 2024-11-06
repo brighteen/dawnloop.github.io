@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNoteForm() {
-        // 모든 기존 폼 제거
+        // 기존의 글 수정 폼과 글 작성 폼 모두 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
 
@@ -65,8 +65,10 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
-        // "저장" 버튼 이벤트 리스너 설정
-        document.getElementById("save-note").addEventListener("click", saveNotePost);
+        // "저장" 버튼 이벤트 리스너 설정 (이벤트 리스너 중복 방지)
+        const saveButton = document.getElementById("save-note");
+        saveButton.removeEventListener("click", saveNotePost); // 기존 이벤트 리스너 제거
+        saveButton.addEventListener("click", saveNotePost); // 새 이벤트 리스너 추가
     }
 
     function showNoteDetail(index) {
@@ -97,9 +99,6 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("delete-note").addEventListener("click", function() {
             deleteNotePost(index);
         });
-
-        // 항상 "글 작성" 버튼이 작동하도록 이벤트 리스너 재설정
-        document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
 
     function saveNotePost(postIndex = null) {
@@ -137,7 +136,6 @@ document.addEventListener("DOMContentLoaded", function() {
             </li>
         `).join("");
 
-        // 항상 "글 작성" 버튼이 작동하도록 이벤트 리스너 재설정
         document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
 
@@ -154,17 +152,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function cancelNoteForm() {
         const form = document.getElementById("note-form");
         if (form) form.remove();
-
-        // 항상 "글 작성" 버튼이 작동하도록 이벤트 리스너 재설정
-        document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
 
     function cancelNoteDetail() {
         const detail = document.getElementById("note-detail");
         if (detail) detail.remove();
-
-        // 항상 "글 작성" 버튼이 작동하도록 이벤트 리스너 재설정
-        document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
 
     // 전역 객체에 함수 추가
