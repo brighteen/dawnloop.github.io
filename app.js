@@ -65,7 +65,33 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function saveNotePost() {
+    function showNoteDetail(index) {
+        const posts = JSON.parse(localStorage.getItem("note")) || [];
+        const post = posts[index];
+
+        const existingDetail = document.getElementById("note-detail");
+        if (existingDetail) existingDetail.remove();
+
+        mainContent.innerHTML += `
+            <div id="note-detail">
+                <input type="text" id="note-title" value="${post.title}"><br>
+                <textarea id="note-content">${post.content}</textarea><br>
+                <button id="save-note">수정</button>
+                <button id="delete-note">삭제</button>
+                <button onclick="cancelNoteDetail()">취소</button>
+            </div>
+        `;
+
+        document.getElementById("save-note").addEventListener("click", function() {
+            saveNotePost(index);
+        });
+
+        document.getElementById("delete-note").addEventListener("click", function() {
+            deleteNotePost(index);
+        });
+    }
+
+    function saveNotePost(postIndex) {
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
 
@@ -75,22 +101,27 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const posts = JSON.parse(localStorage.getItem("note")) || [];
-        posts.push({ title, content });
+        posts[postIndex] = { title, content };
         localStorage.setItem("note", JSON.stringify(posts));
         displayNotePosts();
 
-        const form = document.getElementById("note-form");
-        if (form) form.remove();
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
     }
 
-    function displayNotePosts() {
-        const posts = JSON.parse(localStorage.getItem("note")) || [];
-        const list = document.getElementById("saved-note");
-        list.innerHTML = posts.map((post, index) => `
-            <li class="clickable-note" onclick="showNoteDetail(${index})">
-                <strong>${post.title}</strong> - ${post.content}
-            </li>
-        `).join("");
+    function deleteNotePost(index) {
+        const posts = JSON.parse(localStorage.getItem("note"));
+        posts.splice(index, 1);
+        localStorage.setItem("note", JSON.stringify(posts));
+        displayNotePosts();
+
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
+    }
+
+    function cancelNoteDetail() {
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
     }
 
     function cancelNoteForm() {
@@ -101,7 +132,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // 전역 객체에 함수 추가
     window.loadContent = loadContent;
     window.showNoteForm = showNoteForm;
-    window.showNoteDetail = showNoteDetail;
+    window.showNoteDetail = showNoteDetail; // 전역에 추가
+    window.cancelNoteDetail = cancelNoteDetail; // 전역에 추가
 
     loadContent('resume');
 });
