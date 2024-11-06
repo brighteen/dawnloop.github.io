@@ -91,9 +91,15 @@ document.addEventListener("DOMContentLoaded", function() {
     
         // Note 목록을 다시 표시하고 글 작성 폼을 제거
         displayNotePosts();
+        
+        // 글 작성 폼 제거
         const form = document.getElementById("note-form");
-        if (form) form.remove(); // 글 작성 폼 제거
+        if (form) form.remove();
+    
+        // "글 작성" 버튼이 폼을 다시 표시할 수 있도록 설정
+        document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
     }
+    
 
     function displayNotePosts() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
