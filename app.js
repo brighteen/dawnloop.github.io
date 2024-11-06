@@ -75,12 +75,12 @@ document.addEventListener("DOMContentLoaded", function() {
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
-    
+
         if (!title || !content) {
             alert("제목과 내용을 입력해주세요.");
             return;
         }
-    
+
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         if (postIndex === null) {
             posts.push({ title, content });
@@ -88,18 +88,11 @@ document.addEventListener("DOMContentLoaded", function() {
             posts[postIndex] = { title, content };
         }
         localStorage.setItem("note", JSON.stringify(posts));
-    
-        // Note 목록을 다시 표시하고 글 작성 폼을 제거
         displayNotePosts();
         
-        // 글 작성 폼 제거
         const form = document.getElementById("note-form");
         if (form) form.remove();
-    
-        // "글 작성" 버튼이 폼을 다시 표시할 수 있도록 설정
-        document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
     }
-    
 
     function displayNotePosts() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
@@ -125,10 +118,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (form) form.remove();
     }
 
-    // 함수들을 window 객체에 추가하여 전역으로 접근 가능하게 설정
+    // 전역 객체에 함수 추가
     window.loadContent = loadContent;
     window.showNoteForm = showNoteForm;
     window.deleteNotePost = deleteNotePost;
+    window.cancelNoteForm = cancelNoteForm;
 
     loadContent('resume');
 });
