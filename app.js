@@ -67,14 +67,12 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("note-content").value = posts[postIndex].content;
         }
 
-        document.getElementById("save-note").addEventListener("click", function(event) {
-            saveNotePost(postIndex, event);
+        document.getElementById("save-note").addEventListener("click", function() {
+            saveNotePost(postIndex); // 이벤트 객체를 전달하지 않습니다
         });
     }
 
-    function saveNotePost(postIndex = null, event) {
-        if (event) event.preventDefault();
-
+    function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
 
@@ -90,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
             posts[postIndex] = { title, content };
         }
         localStorage.setItem("note", JSON.stringify(posts));
-        console.log("저장된 노트 목록:", posts);
+        console.log("저장된 노트 목록:", posts); // 올바른 데이터를 출력
         displayNotePosts();
     }
 
