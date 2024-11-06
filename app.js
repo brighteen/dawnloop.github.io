@@ -74,33 +74,33 @@ document.addEventListener("DOMContentLoaded", function() {
     function showNoteDetail(index) {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const post = posts[index];
-
-        // 모든 기존 폼 제거
+    
+        // 기존 폼 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
-
+    
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
-
+    
         mainContent.innerHTML += `
             <div id="note-detail">
-                <input type="text" id="note-title" value="${post.title}"><br>
-                <textarea id="note-content">${post.content}</textarea><br>
-                <button id="save-note">수정</button>
+                <h3>${post.title}</h3>
+                <p>${post.content}</p><br>
+                <button id="edit-note">수정</button>
                 <button id="delete-note">삭제</button>
                 <button onclick="cancelNoteDetail()">취소</button>
             </div>
         `;
-
-        // "수정" 및 "삭제" 버튼 이벤트 리스너 설정
-        document.getElementById("save-note").addEventListener("click", function() {
-            saveNotePost(index);
+    
+        document.getElementById("edit-note").addEventListener("click", function() {
+            editNoteForm(index);
         });
-
+    
         document.getElementById("delete-note").addEventListener("click", function() {
             deleteNotePost(index);
         });
     }
+    
 
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value.trim();
@@ -141,13 +141,13 @@ document.addEventListener("DOMContentLoaded", function() {
         const list = document.getElementById("saved-note");
         list.innerHTML = posts.map((post, index) => `
             <li class="clickable-note" onclick="showNoteDetail(${index})">
-                <strong>${post.title}</strong> - ${post.content}
+                <strong>${post.title}</strong>
             </li>
         `).join("");
-
-        // "글 작성" 버튼 이벤트 리스너 재설정
+    
         document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
+    
 
     function deleteNotePost(index) {
         const posts = JSON.parse(localStorage.getItem("note"));
