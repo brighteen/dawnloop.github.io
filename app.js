@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("note-content").value = posts[postIndex].content;
         }
 
-        // 이벤트 객체가 전달되지 않도록 함수를 호출
         document.getElementById("save-note").addEventListener("click", function() {
             saveNotePost(postIndex);
         });
@@ -89,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
             posts[postIndex] = { title, content };
         }
         localStorage.setItem("note", JSON.stringify(posts));
-        console.log("저장된 노트 목록:", posts); // 이제 올바른 데이터를 출력
+        console.log("저장된 노트 목록:", posts);
         displayNotePosts();
     }
 
@@ -117,6 +116,10 @@ document.addEventListener("DOMContentLoaded", function() {
         if (form) form.remove();
     }
 
+    // 함수들을 window 객체에 추가하여 전역으로 접근 가능하게 설정
     window.loadContent = loadContent;
+    window.showNoteForm = showNoteForm;
+    window.deleteNotePost = deleteNotePost;
+
     loadContent('resume');
 });
