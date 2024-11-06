@@ -47,67 +47,55 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function showNoteForm(postIndex = null) {
-        const existingForm = document.getElementById("note-form");
-        if (existingForm) existingForm.remove();
-
-        mainContent.innerHTML += `
-            <div id="note-form">
-                <input type="text" id="note-title" placeholder="제목"><br>
-                <textarea id="note-content" placeholder="내용을 작성하세요..."></textarea><br>
-                <button id="save-note">저장</button>
-                <button onclick="cancelNoteForm()">취소</button>
-            </div>
-        `;
-
-        const posts = JSON.parse(localStorage.getItem("note")) || [];
-
-        if (postIndex !== null && postIndex >= 0 && postIndex < posts.length) {
-            document.getElementById("note-title").value = posts[postIndex].title;
-            document.getElementById("note-content").value = posts[postIndex].content;
-        }
-
-        document.getElementById("save-note").addEventListener("click", function() {
-            saveNotePost(postIndex);
-        });
-    }
-
-    function saveNotePost(postIndex = null) {
-        const title = document.getElementById("note-title").value;
-        const content = document.getElementById("note-content").value;
-    
-        if (!title || !content) {
-            alert("제목과 내용을 입력해주세요.");
-            return;
-        }
-    
-        const posts = JSON.parse(localStorage.getItem("note")) || [];
-        if (postIndex === null) {
-            posts.push({ title, content });
-        } else {
-            posts[postIndex] = { title, content };
-        }
-        localStorage.setItem("note", JSON.stringify(posts));
-        displayNotePosts();
-    
-        // 글 작성 폼 제거
-        const form = document.getElementById("note-form");
-        if (form) form.remove();
-    
-        // "글 작성" 버튼의 이벤트 리스너를 재설정
-        document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
-    }
-
     function displayNotePosts() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const list = document.getElementById("saved-note");
         list.innerHTML = posts.map((post, index) => `
-            <li>
+            <li onclick="showNoteDetail(${index})">
                 <strong>${post.title}</strong> - ${post.content}
-                <button onclick="showNoteForm(${index})">수정</button>
-                <button onclick="deleteNotePost(${index})">삭제</button>
             </li>
         `).join("");
+    }
+
+    function showNoteDetail(index) {
+        const posts = JSON.parse(localStorage.getItem("note")) || [];
+        const post = posts[index];
+
+        mainContent.innerHTML += `
+            <div id="note-detail">
+                <input type="text" id="note-title" value="${post.title}"><br>
+                <textarea id="note-content">${post.content}</textarea><br>
+                <button id="save-note">수정</button>
+                <button id="delete-note">삭제</button>
+                <button onclick="cancelNoteDetail()">취소</button>
+            </div>
+        `;
+
+        document.getElementById("save-note").addEventListener("click", function() {
+            saveNotePost(index);
+        });
+
+        document.getElementById("delete-note").addEventListener("click", function() {
+            deleteNotePost(index);
+        });
+    }
+
+    function saveNotePost(postIndex) {
+        const title = document.getElementById("note-title").value;
+        const content = document.getElementById("note-content").value;
+
+        if (!title || !content) {
+            alert("제목과 내용을 입력해주세요.");
+            return;
+        }
+
+        const posts = JSON.parse(localStorage.getItem("note")) || [];
+        posts[postIndex] = { title, content };
+        localStorage.setItem("note", JSON.stringify(posts));
+        displayNotePosts();
+
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
     }
 
     function deleteNotePost(index) {
@@ -115,22 +103,18 @@ document.addEventListener("DOMContentLoaded", function() {
         posts.splice(index, 1);
         localStorage.setItem("note", JSON.stringify(posts));
         displayNotePosts();
+
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
     }
 
-    function cancelNoteForm() {
-        // 글 작성 폼 제거
-        const form = document.getElementById("note-form");
-        if (form) form.remove();
-    
-        // "글 작성" 버튼의 이벤트 리스너를 재설정
-        document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
+    function cancelNoteDetail() {
+        const detail = document.getElementById("note-detail");
+        if (detail) detail.remove();
     }
 
-    // 전역 객체에 함수 추가
     window.loadContent = loadContent;
-    window.showNoteForm = showNoteForm;
-    window.deleteNotePost = deleteNotePost;
-    window.cancelNoteForm = cancelNoteForm;
+    window.showNoteDetail = showNoteDetail;
 
     loadContent('resume');
 });
