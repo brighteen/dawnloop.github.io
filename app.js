@@ -93,11 +93,35 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
     
         document.getElementById("edit-note").addEventListener("click", function() {
-            editNoteForm(index);
+            editNoteForm(index); // 수정 폼을 호출
         });
     
         document.getElementById("delete-note").addEventListener("click", function() {
             deleteNotePost(index);
+        });
+    }
+    
+
+    function editNoteForm(index) {
+        const posts = JSON.parse(localStorage.getItem("note")) || [];
+        const post = posts[index];
+    
+        // 기존 note-detail 폼 제거하고 수정 가능한 폼 표시
+        const existingDetail = document.getElementById("note-detail");
+        if (existingDetail) existingDetail.remove();
+    
+        mainContent.innerHTML += `
+            <div id="note-form">
+                <input type="text" id="note-title" value="${post.title}"><br>
+                <textarea id="note-content">${post.content}</textarea><br>
+                <button id="save-note">저장</button>
+                <button onclick="cancelNoteForm()">취소</button>
+            </div>
+        `;
+    
+        // "저장" 버튼에 이벤트 리스너 추가하여 수정 내용을 저장
+        document.getElementById("save-note").addEventListener("click", function() {
+            saveNotePost(index); // 기존 글의 인덱스를 전달하여 수정 저장
         });
     }
     
