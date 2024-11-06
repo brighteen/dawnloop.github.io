@@ -109,6 +109,16 @@ document.addEventListener("DOMContentLoaded", function() {
         if (detail) detail.remove();
     }
 
+    function displayNotePosts() {
+        const posts = JSON.parse(localStorage.getItem("note")) || [];
+        const list = document.getElementById("saved-note");
+        list.innerHTML = posts.map((post, index) => `
+            <li class="clickable-note" onclick="showNoteDetail(${index})">
+                <strong>${post.title}</strong> - ${post.content}
+            </li>
+        `).join("");
+    }
+
     function deleteNotePost(index) {
         const posts = JSON.parse(localStorage.getItem("note"));
         posts.splice(index, 1);
@@ -132,8 +142,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // 전역 객체에 함수 추가
     window.loadContent = loadContent;
     window.showNoteForm = showNoteForm;
-    window.showNoteDetail = showNoteDetail; // 전역에 추가
-    window.cancelNoteDetail = cancelNoteDetail; // 전역에 추가
+    window.showNoteDetail = showNoteDetail;
+    window.displayNotePosts = displayNotePosts; // 전역에 추가
+    window.cancelNoteDetail = cancelNoteDetail;
 
     loadContent('resume');
 });
