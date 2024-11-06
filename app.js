@@ -167,6 +167,9 @@ document.addEventListener("DOMContentLoaded", function() {
     function cancelNoteDetail() {
         const detail = document.getElementById("note-detail");
         if (detail) detail.remove();
+
+        // "글 작성" 버튼 이벤트 리스너 재설정
+        document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
 
     // 전역 객체에 함수 추가
