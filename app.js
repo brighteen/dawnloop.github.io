@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
             saveNotePost(index); // 기존 글의 인덱스를 전달하여 수정 저장
         });
     }
-    
+
 
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value.trim();
@@ -184,9 +184,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function cancelNoteForm() {
-        const form = document.getElementById("note-form");
-        if (form) form.remove();
-    }
+    const form = document.getElementById("note-form");
+    if (form) form.remove();
+
+    // "글 작성" 버튼 이벤트 리스너 재설정
+    document.getElementById("new-note-post").addEventListener("click", showNoteForm);
+}
 
     function cancelNoteDetail() {
         const detail = document.getElementById("note-detail");
@@ -202,6 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.showNoteDetail = showNoteDetail;
     window.displayNotePosts = displayNotePosts;
     window.cancelNoteDetail = cancelNoteDetail;
+    window.cancelNoteForm = cancelNoteForm;
 
     loadContent('resume');
 });
