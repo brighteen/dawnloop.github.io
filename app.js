@@ -48,28 +48,31 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNoteForm() {
-        // 기존의 글 수정 폼과 글 작성 폼 모두 제거
+        // 기존 글 목록과 "글 작성" 버튼 숨기기
+        document.getElementById("saved-note").style.display = "none";
+        document.getElementById("new-note-post").style.display = "none";
+    
+        // 기존 폼 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
-
+    
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
-
+    
         // 새 글 작성 폼 추가
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
                 <textarea id="note-content" placeholder="내용을 작성하세요..."></textarea><br>
                 <button id="save-note">저장</button>
-                <button onclick="cancelNoteForm()">취소</button>
+                <button onclick="openNoteList()">목록 열기</button>
             </div>
         `;
-
-        // "저장" 버튼 이벤트 리스너 설정
-        document.getElementById("save-note").addEventListener("click", function() {
-            saveNotePost(); // 새 글 작성 시 postIndex는 null로 전달
-        });
+    
+        // "저장" 버튼에 이벤트 리스너 추가
+        document.getElementById("save-note").addEventListener("click", saveNotePost);
     }
+    
 
     function showNoteDetail(index) {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
