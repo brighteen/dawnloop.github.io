@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button id="new-note-post">글 작성</button>
                 <ul id="saved-note"></ul>
             `;
-            document.getElementById("new-note-post").addEventListener("click", showNoteForm);
+            document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
             displayNotePosts();
         }
     }
@@ -67,8 +67,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("note-content").value = posts[postIndex].content;
         }
 
+        // 이벤트 객체가 전달되지 않도록 함수를 호출
         document.getElementById("save-note").addEventListener("click", function() {
-            saveNotePost(postIndex); // 이벤트 객체를 전달하지 않습니다
+            saveNotePost(postIndex);
         });
     }
 
@@ -88,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
             posts[postIndex] = { title, content };
         }
         localStorage.setItem("note", JSON.stringify(posts));
-        console.log("저장된 노트 목록:", posts); // 올바른 데이터를 출력
+        console.log("저장된 노트 목록:", posts); // 이제 올바른 데이터를 출력
         displayNotePosts();
     }
 
