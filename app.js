@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button id="new-note-post">글 작성</button>
                 <ul id="saved-note"></ul>
             `;
-            document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
+            document.getElementById("new-note-post").addEventListener("click", showNoteForm);
             displayNotePosts();
         }
     }
@@ -48,14 +48,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNoteForm() {
-        // 기존의 글 수정 폼이 있으면 제거
+        // 기존의 글 수정 폼과 글 작성 폼 모두 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
-    
-        // 기존의 글 작성 폼이 있으면 제거
+
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
-    
+
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
@@ -64,19 +63,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button onclick="cancelNoteForm()">취소</button>
             </div>
         `;
-    
-        document.getElementById("save-note").addEventListener("click", function() {
-            saveNotePost();
-        });
+
+        document.getElementById("save-note").addEventListener("click", saveNotePost);
     }
-    
 
     function showNoteDetail(index) {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const post = posts[index];
 
+        // 기존 폼 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
+
+        const existingForm = document.getElementById("note-form");
+        if (existingForm) existingForm.remove();
 
         mainContent.innerHTML += `
             <div id="note-detail">
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function saveNotePost(postIndex) {
+    function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value;
         const content = document.getElementById("note-content").value;
 
@@ -107,9 +107,19 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const posts = JSON.parse(localStorage.getItem("note")) || [];
-        posts[postIndex] = { title, content };
+        if (postIndex === null) {
+            // 새 글 작성
+            posts.push({ title, content });
+        } else {
+            // 기존 글 수정
+            posts[postIndex] = { title, content };
+        }
         localStorage.setItem("note", JSON.stringify(posts));
         displayNotePosts();
+
+        // 폼 제거
+        const form = document.getElementById("note-form");
+        if (form) form.remove();
 
         const detail = document.getElementById("note-detail");
         if (detail) detail.remove();
@@ -149,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.loadContent = loadContent;
     window.showNoteForm = showNoteForm;
     window.showNoteDetail = showNoteDetail;
-    window.displayNotePosts = displayNotePosts; // 전역에 추가
+    window.displayNotePosts = displayNotePosts;
     window.cancelNoteDetail = cancelNoteDetail;
 
     loadContent('resume');
