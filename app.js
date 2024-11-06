@@ -48,9 +48,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNoteForm() {
+        // 기존의 글 수정 폼이 있으면 제거
+        const existingDetail = document.getElementById("note-detail");
+        if (existingDetail) existingDetail.remove();
+    
+        // 기존의 글 작성 폼이 있으면 제거
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
-
+    
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
@@ -59,11 +64,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button onclick="cancelNoteForm()">취소</button>
             </div>
         `;
-
+    
         document.getElementById("save-note").addEventListener("click", function() {
             saveNotePost();
         });
     }
+    
 
     function showNoteDetail(index) {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
