@@ -65,10 +65,10 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
-        // "저장" 버튼 이벤트 리스너 설정 (이벤트 리스너 중복 방지)
-        const saveButton = document.getElementById("save-note");
-        saveButton.removeEventListener("click", saveNotePost); // 기존 이벤트 리스너 제거
-        saveButton.addEventListener("click", saveNotePost); // 새 이벤트 리스너 추가
+        // "저장" 버튼 이벤트 리스너 설정
+        document.getElementById("save-note").addEventListener("click", function() {
+            saveNotePost(); // 새 글 작성 시 postIndex는 null로 전달
+        });
     }
 
     function showNoteDetail(index) {
@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
+        // "수정" 및 "삭제" 버튼 이벤트 리스너 설정
         document.getElementById("save-note").addEventListener("click", function() {
             saveNotePost(index);
         });
@@ -110,16 +111,24 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // 글을 저장할 배열
         const posts = JSON.parse(localStorage.getItem("note")) || [];
+
         if (postIndex === null) {
+            // 새 글 작성
             posts.push({ title, content });
         } else {
+            // 기존 글 수정
             posts[postIndex] = { title, content };
         }
 
+        // 변경된 배열을 localStorage에 저장
         localStorage.setItem("note", JSON.stringify(posts));
+
+        // 글 목록 새로고침
         displayNotePosts();
 
+        // 글 작성 폼과 글 수정 폼 제거
         const form = document.getElementById("note-form");
         if (form) form.remove();
 
@@ -136,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function() {
             </li>
         `).join("");
 
+        // "글 작성" 버튼 이벤트 리스너 재설정
         document.getElementById("new-note-post").addEventListener("click", showNoteForm);
     }
 
