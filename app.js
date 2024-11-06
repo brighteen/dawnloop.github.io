@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const list = document.getElementById("saved-note");
         list.innerHTML = posts.map((post, index) => `
-            <li onclick="showNoteDetail(${index})">
+            <li class="clickable-note" onclick="showNoteDetail(${index})">
                 <strong>${post.title}</strong> - ${post.content}
             </li>
         `).join("");

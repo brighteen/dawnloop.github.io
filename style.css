@@ -61,3 +61,13 @@ button {
 button:hover {
     background-color: #555;
 }
+
+/* 클릭 가능한 노트 항목 스타일 */
+.clickable-note {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.clickable-note:hover {
+    background-color: #f0f0f0;
+}
