@@ -18,8 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button id="new-note-post">글 작성</button>
                 <ul id="saved-note"></ul>
             `;
-            // "글 작성" 버튼 이벤트 리스너 추가
-            document.getElementById("new-note-post").addEventListener("click", () => showNoteForm());
+            document.getElementById("new-note-post").addEventListener("click", showNoteForm);
             displayNotePosts();
         }
     }
@@ -49,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNoteForm() {
-        // 기존의 글 수정 폼과 글 작성 폼 모두 제거
+        // 기존 폼 제거
         const existingDetail = document.getElementById("note-detail");
         if (existingDetail) existingDetail.remove();
 
@@ -65,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
-        // "저장" 버튼 이벤트 리스너 설정
         document.getElementById("save-note").addEventListener("click", saveNotePost);
     }
 
@@ -90,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
 
-        // "수정" 및 "삭제" 버튼 이벤트 리스너 설정
         document.getElementById("save-note").addEventListener("click", function() {
             saveNotePost(index);
         });
@@ -117,7 +114,11 @@ document.addEventListener("DOMContentLoaded", function() {
             // 기존 글 수정
             posts[postIndex] = { title, content };
         }
+
+        // 글 저장
         localStorage.setItem("note", JSON.stringify(posts));
+
+        // 목록 새로고침
         displayNotePosts();
 
         // 폼 제거
