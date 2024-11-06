@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function() {
         mainContent.innerHTML += `
             <div id="note-detail">
                 <h3>${post.title}</h3>
-                <p>${post.content}</p><br>
+                <p>${post.content.replace(/\n/g, "<br>")}</p><br> <!-- 줄바꿈을 <br>로 변환 -->
                 <button id="edit-note">수정</button>
                 <button id="delete-note">삭제</button>
                 <button onclick="cancelNoteDetail()">취소</button>
@@ -93,13 +93,13 @@ document.addEventListener("DOMContentLoaded", function() {
         `;
     
         document.getElementById("edit-note").addEventListener("click", function() {
-            editNoteForm(index); // 수정 폼을 호출
+            editNoteForm(index);
         });
     
         document.getElementById("delete-note").addEventListener("click", function() {
             deleteNotePost(index);
         });
-    }
+    }    
     
 
     function editNoteForm(index) {
