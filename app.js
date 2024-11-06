@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function showNoteForm(postIndex = null) {
         const existingForm = document.getElementById("note-form");
         if (existingForm) existingForm.remove();
-
+    
         mainContent.innerHTML += `
             <div id="note-form">
                 <input type="text" id="note-title" placeholder="제목"><br>
@@ -59,17 +59,20 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button onclick="cancelNoteForm()">취소</button>
             </div>
         `;
-
-        if (postIndex !== null) {
-            const posts = JSON.parse(localStorage.getItem("note")) || [];
+    
+        const posts = JSON.parse(localStorage.getItem("note")) || [];
+    
+        // postIndex가 유효한 경우에만 기존 제목과 내용을 로드
+        if (postIndex !== null && postIndex >= 0 && postIndex < posts.length) {
             document.getElementById("note-title").value = posts[postIndex].title;
             document.getElementById("note-content").value = posts[postIndex].content;
         }
-
+    
         document.getElementById("save-note").addEventListener("click", function() {
             saveNotePost(postIndex);
         });
     }
+    
 
     function saveNotePost(postIndex = null) {
         const title = document.getElementById("note-title").value;
