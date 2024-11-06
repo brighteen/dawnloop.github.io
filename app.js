@@ -69,9 +69,12 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
         `;
     
-        // "저장" 버튼에 이벤트 리스너 추가
-        document.getElementById("save-note").addEventListener("click", saveNotePost);
+        // "저장" 버튼에 이벤트 리스너 추가 (이벤트 리스너 중복 방지)
+        document.getElementById("save-note").addEventListener("click", function() {
+            saveNotePost(); // 새 글 작성 시 인덱스를 null로 전달
+        });
     }
+    
     
 
     function showNoteDetail(index) {
@@ -160,20 +163,22 @@ document.addEventListener("DOMContentLoaded", function() {
     
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         if (postIndex === null) {
+            // 새 글 작성
             posts.push({ title, content });
         } else {
+            // 기존 글 수정
             posts[postIndex] = { title, content };
         }
     
         localStorage.setItem("note", JSON.stringify(posts));
     
-        // 글 작성 폼 제거
+        // 글 작성 폼 제거 및 목록으로 돌아가기
         const form = document.getElementById("note-form");
         if (form) form.remove();
     
-        // 글 저장 후 목록 화면으로 돌아가기
         openNoteList();
     }
+    
 
     function displayNotePosts() {
         const posts = JSON.parse(localStorage.getItem("note")) || [];
