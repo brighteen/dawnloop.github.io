@@ -164,6 +164,10 @@ document.addEventListener("DOMContentLoaded", function() {
     
         localStorage.setItem("note", JSON.stringify(posts));
     
+        // 글 작성 폼 제거
+        const form = document.getElementById("note-form");
+        if (form) form.remove();
+    
         // 글 저장 후 목록 화면으로 돌아가기
         openNoteList();
     }
