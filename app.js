@@ -58,9 +58,13 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function showNoteDetail(index) {
+        // 기존에 있는 글 폼을 제거
+        const existingDetail = document.getElementById("note-detail");
+        if (existingDetail) existingDetail.remove();
+    
         const posts = JSON.parse(localStorage.getItem("note")) || [];
         const post = posts[index];
-
+    
         mainContent.innerHTML += `
             <div id="note-detail">
                 <input type="text" id="note-title" value="${post.title}"><br>
@@ -70,15 +74,16 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button onclick="cancelNoteDetail()">취소</button>
             </div>
         `;
-
+    
         document.getElementById("save-note").addEventListener("click", function() {
             saveNotePost(index);
         });
-
+    
         document.getElementById("delete-note").addEventListener("click", function() {
             deleteNotePost(index);
         });
     }
+    
 
     function saveNotePost(postIndex) {
         const title = document.getElementById("note-title").value;
