@@ -226,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
     window.displayNotePosts = displayNotePosts;
     window.cancelNoteDetail = cancelNoteDetail;
     window.cancelNoteForm = cancelNoteForm;
+    window.openNoteList = openNoteList;
 
     loadContent('resume');
 });
