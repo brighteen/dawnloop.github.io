@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function() {
         } else if (category === 'note') {
             mainContent.innerHTML = `
                 <h2>Note</h2>
-                <ul id="saved-note"></ul>
                 <button id="new-note-post">글 작성</button>
+                <ul id="saved-note"></ul>
             `;
             document.getElementById("new-note-post").addEventListener("click", showNoteForm);
-            displayNotePosts();
+            displayNotePosts(); // Note 목록 즉시 표시
         }
     }
 
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
             posts[postIndex] = { title, content };
         }
         localStorage.setItem("note", JSON.stringify(posts));
-        displayNotePosts(); // Note 목록을 즉시 업데이트
+        loadContent('note'); // Note 목록으로 돌아가기
     }
 
     function displayNotePosts() {
@@ -115,5 +115,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     window.loadContent = loadContent;
-    loadContent('resume');
+    loadContent('resume'); // 처음 Resume 화면 로드
 });
