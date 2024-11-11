@@ -1,6 +1,6 @@
 // Firebase 모듈 임포트
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Firebase 설정 정보
 const firebaseConfig = {
