@@ -1,6 +1,6 @@
 // Firebase 모듈 임포트
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Firebase 설정 정보
 const firebaseConfig = {
@@ -15,4 +15,4 @@ const firebaseConfig = {
 // Firebase 초기화
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-console.log("Firebase 연결 성공");
+console.log("Firebase Firestore 초기화 완료");
