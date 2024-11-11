@@ -1,5 +1,56 @@
+import { db } from "./firebase-init.js";
+import { collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
 document.addEventListener("DOMContentLoaded", function() {
     const mainContent = document.getElementById("main-content");
+
+    async function savePostToFirestore(title, content) {
+        try {
+            const docRef = await addDoc(collection(db, "posts"), {
+                title: title,
+                content: content,
+                timestamp: new Date()
+            });
+            console.log("글 저장 성공, 문서 ID: ", docRef.id);
+        } catch (e) {
+            console.error("글 저장 실패: ", e);
+        }
+    }
+
+    async function getPostsFromFirestore() {
+        const querySnapshot = await getDocs(collection(db, "posts"));
+        const posts = [];
+        querySnapshot.forEach((doc) => {
+            posts.push({ id: doc.id, ...doc.data() });
+        });
+        return posts;
+    }
+
+    // 글 저장 예시 - 글을 저장할 때 savePostToFirestore 함수 호출
+    document.getElementById("save-note").addEventListener("click", function() {
+        const title = document.getElementById("note-title").value.trim();
+        const content = document.getElementById("note-content").value.trim();
+        if (title && content) {
+            savePostToFirestore(title, content);
+        } else {
+            alert("제목과 내용을 입력해 주세요.");
+        }
+    });
+
+    // 글 목록 표시 예시 - getPostsFromFirestore로 Firestore에서 글을 불러오기
+    async function displayNotesFromFirestore() {
+        const posts = await getPostsFromFirestore();
+        const list = document.getElementById("saved-note");
+        list.innerHTML = posts.map((post) => `
+            <li class="clickable-note">
+                <strong>${post.title}</strong><br>
+                <span>${post.content}</span>
+            </li>
+        `).join("");
+    }
+
+    displayNotesFromFirestore(); // 페이지 로드 시 Firestore에서 글을 불러옴
+
 
     function loadContent(category) {
         if (category === 'resume') {
