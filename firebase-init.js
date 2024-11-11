@@ -16,3 +16,27 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 console.log("Firebase Firestore 초기화 완료");
+
+// Firestore에 글 저장
+export async function savePostToFirestore(title, content) {
+  try {
+    const docRef = await addDoc(collection(db, "posts"), {
+      title: title,
+      content: content,
+      timestamp: new Date()
+    });
+    console.log("글 저장 성공, 문서 ID: ", docRef.id);
+  } catch (e) {
+    console.error("글 저장 실패: ", e);
+  }
+}
+
+// Firestore에서 글 목록 불러오기
+export async function getPostsFromFirestore() {
+  const querySnapshot = await getDocs(collection(db, "posts"));
+  const posts = [];
+  querySnapshot.forEach((doc) => {
+    posts.push({ id: doc.id, ...doc.data() });
+  });
+  return posts;
+}
